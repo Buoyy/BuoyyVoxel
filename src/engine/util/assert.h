@@ -5,14 +5,14 @@ void assert_impl(const char *expr, const char *file, const int line);
 
 #ifndef NDEBUG
 
-#define ASSERT(EXPR)\
-    do { \
-        if (!(EXPR)) \
+#define ASSERT(EXPR)                                \
+    do {                                            \
+        if (!(EXPR))                                \
             assert_impl(#EXPR, __FILE__, __LINE__); \
     } while (0)
 
-#define UNREACHABLE()\
-    do { \
+#define UNREACHABLE()                               \
+    do {                                            \
     assert_impl("UNREACHABLE", __FILE__, __LINE__); \
     } while (0)
 

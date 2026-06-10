@@ -12,5 +12,5 @@ int main()
     // Uncomment to test assertions
     // ASSERT(0 == 1);
 
-    LOG_ERROR("Commit %d is incomplete!", 0);
+    LOG_INFO("Commit %d is complete!", 0);
 }

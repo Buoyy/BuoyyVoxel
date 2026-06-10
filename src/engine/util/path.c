@@ -2,7 +2,7 @@
 
 #include <string.h>
 
-const char *get_filename(const char *path)
+const char *path_filename(const char *path)
 {
     const char* filename = strrchr(path, '/');
     if (!filename) {
