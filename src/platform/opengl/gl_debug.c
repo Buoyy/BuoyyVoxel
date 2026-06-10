@@ -2,6 +2,7 @@
 
 #include "engine/util/log.h"
 #include "engine/util/path.h"
+#include <stdlib.h>
 
 const char *gl_error_string(GLenum error)
 {
@@ -32,4 +33,39 @@ void gl_check_error(const char *file, int line)
             path_filename(file),
             line);    
     }
+}
+
+static void APIENTRY gl_debug_callback(
+    GLenum source,
+    GLenum type,
+    GLuint id,
+    GLenum severity,
+    GLsizei length,
+    const GLchar *message,
+    const void *user_param)
+{
+    (void)source;
+    (void)type;
+    (void)id;
+    (void)severity;
+    (void)length;
+    (void)user_param;
+
+    LOG_ERROR("[OpenGL] %s", message);
+}
+
+bool gl_debug_init(void)
+{
+    if (!GLAD_GL_ARB_debug_output)
+    {
+        LOG_WARN("GL_ARB_debug_output unavailable");
+        return false;
+    }
+
+    glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS_ARB);
+
+    glDebugMessageCallbackARB(gl_debug_callback, NULL);
+    LOG_INFO("GL_ARB_debug_output initialization succeeded");
+
+    return true;
 }

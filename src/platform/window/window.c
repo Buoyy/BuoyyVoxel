@@ -2,7 +2,6 @@
 
 #include <GLFW/glfw3.h>
 #include "engine/util/log.h"
-#include "window.h"
 
 static GLFWwindow *window;
 
