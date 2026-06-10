@@ -1,6 +1,5 @@
 .vscode/
 .cache/
 build/
-build.bat
 game.exe
 REPO.zip
