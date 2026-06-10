@@ -3,6 +3,7 @@ Welcome to **BuoyyVoxel**. This is a voxel game engine I am making entirely in C
 
 ## Features:
 - Basic logging system with log levels and macros
+- Assertions (self-explanatory)
 
 ---
 

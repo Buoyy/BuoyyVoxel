@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.14)
 project(BuoyyVoxel)
 set(CMAKE_C_STANDARD 99)
+set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(INCLUDE_DIRECTORIES ext src)
 if(WIN32)
@@ -21,6 +23,7 @@ set(SOURCE_FILES
     src/glad.c
     src/stb_image.c
     src/engine/util/log.c
+    src/engine/util/assert.c
 )
 
 add_executable(game ${SOURCE_FILES})
