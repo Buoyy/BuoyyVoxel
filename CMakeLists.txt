@@ -20,6 +20,7 @@ set(SOURCE_FILES
     src/main.c
     src/glad.c
     src/stb_image.c
+    src/engine/util/log.c
 )
 
 add_executable(game ${SOURCE_FILES})
