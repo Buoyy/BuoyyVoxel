@@ -23,6 +23,7 @@ set(SOURCE_FILES
     src/glad.c
     src/stb_image.c
     src/engine/util/log.c
+    src/engine/util/path.c
     src/engine/util/assert.c
 )
 
