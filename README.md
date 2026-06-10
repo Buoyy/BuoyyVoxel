@@ -14,7 +14,8 @@ Welcome to **BuoyyVoxel**. This is a voxel game engine I am making entirely in C
 ---
 
 ## How to build and run?
-- Make sure you have `GLFW` static library in your global library directory.
+- Clone the repository by using this command:
+- `git clone --recursive https://github.com/Buoyy/BuoyyVoxel.git`
 - On Windows, use `build.bat`. 
 - On Linux/Mac, use `build.sh`. 
 - Should work on GCC and Clang for sure.
