@@ -25,7 +25,10 @@ set(SOURCE_FILES
     src/engine/util/log.c
     src/engine/util/path.c
     src/engine/util/assert.c
+
     src/platform/opengl/gl_debug.c
+    src/platform/window/window.c
+    src/platform/opengl/gl_context.c
 )
 
 add_executable(game ${SOURCE_FILES})

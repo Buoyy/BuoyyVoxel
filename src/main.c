@@ -1,16 +1,25 @@
-#include "engine/util/log.h"
-#include "engine/util/assert.h"
+#include "platform/opengl/gl_context.h"
+#include <glad/glad.h>
+#include "platform/window/window.h"
 
 int main()
 {
-    LOG_INFO("Hello, BuoyyVoxel %.1f!", 2.0f);
+    if (!window_create(1280, 720, "BuoyyVoxel"))
+        return 1;
 
-    ASSERT(1 == 1);
+    if (!gl_context_init())
+    {
+        window_destroy();
+        return 1;
+    }
 
-    LOG_WARN("Don't start without a plan!", "");
+    while (!window_should_close())
+    {
+        glClear(GL_COLOR_BUFFER_BIT);
 
-    // Uncomment to test assertions
-    // ASSERT(0 == 1);
+        window_poll_events();
+        window_swap_buffers();
+    }
 
-    LOG_INFO("Commit %d is complete!", 0);
+    window_destroy();
 }
