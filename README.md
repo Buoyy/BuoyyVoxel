@@ -16,12 +16,10 @@ Welcome to **BuoyyVoxel**. This is a voxel game engine I am making entirely in C
 ## How to build and run?
 - Clone the repository by using this command:
 - `git clone --recursive https://github.com/Buoyy/BuoyyVoxel.git`
-- On Windows, use `build.bat`. 
+- On Windows, use `build_msvc.bat` if using Visual Studio as a compiler, else use `build_!msvc.bat`. 
 - On Linux/Mac, use `build.sh`. 
 - Should work on GCC and Clang for sure.
 - Then `.\game.exe` on Windows or `./game` on Linux/Mac in root directory of the repository to run.
-
-I haven't tested this on MSVC compilers, so if it fails, do tell me please. Thank you.
 
 ---
 ## Style Guide:
