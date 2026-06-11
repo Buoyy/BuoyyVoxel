@@ -1,6 +1,7 @@
 #include "platform/opengl/gl_context.h"
 #include <glad/glad.h>
 #include "platform/window/window.h"
+// #include <cglm/cglm.h> // uncomment to test cglm
 
 int main()
 {
@@ -20,6 +21,9 @@ int main()
         window_poll_events();
         window_swap_buffers();
     }
+
+    // cglm test
+    // glm_vec3_print((vec3){1, 1, 0}, stdout);
 
     window_destroy();
     return 0;

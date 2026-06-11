@@ -6,7 +6,12 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_subdirectory(ext/glfw)
 
-set(INCLUDE_DIRECTORIES ext src ext/glfw/include)
+set(INCLUDE_DIRS 
+    ext
+    src 
+    ext/glfw/include 
+    ext/cglm/include
+)
 if(WIN32)
     if(CMAKE_<LANG>_COMPILER_ID STREQUAL "MSVC") 
         set(LIBRARIES glfw opengl32)
@@ -34,6 +39,6 @@ set(SOURCE_FILES
 )
 
 add_executable(game ${SOURCE_FILES})
-target_include_directories(game PRIVATE ${INCLUDE_DIRECTORIES})
+target_include_directories(game PRIVATE ${INCLUDE_DIRS})
 target_link_libraries(game PRIVATE ${LIBRARIES})
 target_compile_options(game PRIVATE ${WARNINGS})
