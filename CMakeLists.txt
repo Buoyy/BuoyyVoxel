@@ -13,7 +13,7 @@ set(INCLUDE_DIRS
     ext/cglm/include
 )
 if(WIN32)
-    if(CMAKE_<LANG>_COMPILER_ID STREQUAL "MSVC") 
+    if(CMAKE_C_COMPILER_ID STREQUAL "MSVC") 
         set(LIBRARIES glfw opengl32)
         set(WARNINGS /W4)
     else()
