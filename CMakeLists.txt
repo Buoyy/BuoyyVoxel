@@ -27,11 +27,16 @@ endif()
 
 set(SOURCE_FILES 
     src/main.c
+    
     src/glad.c
+    
     src/stb_image.c
+    
     src/engine/util/log.c
     src/engine/util/path.c
     src/engine/util/assert.c
+
+    src/engine/render/shader.c
 
     src/platform/opengl/gl_debug.c
     src/platform/window/window.c
