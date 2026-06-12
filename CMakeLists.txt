@@ -40,6 +40,7 @@ set(SOURCE_FILES
     src/engine/util/file.c
 
     src/engine/render/shader.c
+    src/engine/render/vertex_buffer.c
 
     src/platform/opengl/gl_debug.c
     src/platform/window/window.c

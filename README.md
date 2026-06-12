@@ -10,7 +10,8 @@ Welcome to **BuoyyVoxel**. This is a voxel game engine I am making entirely in C
 ## Engine
 - A simple window opens up and shows a blue triangle for no reason at all (I programmed it)
 - OpenGL debug messages with `ARB_debug_output` OpenGL extension
-- GLSL shaders as separate files
+- Shader abstraction with external file support
+- Vertex buffer abstraction
 
 ---
 
