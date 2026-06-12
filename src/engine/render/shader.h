@@ -9,7 +9,8 @@ struct Shader
     unsigned int id;  
 };
 
-bool shader_create(Shader *shader, const char *vertSrc, const char *fragSrc);
+bool shader_create(Shader *shader, const char *vert_src, const char *frag_src);
+bool shader_create_from_file(Shader *shader, const char *vert_path, const char *frag_path);
 void shader_bind(const Shader *shader);
 void shader_destroy(Shader *shader);
 

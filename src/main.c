@@ -1,3 +1,4 @@
+#include "engine/render/shader.h"
 #include "engine/util/file.h"
 #include "engine/util/log.h"
 #include "platform/opengl/gl_context.h"
@@ -15,19 +16,24 @@ int main()
         return 1;
     }
 
-    char *file_str;
-    file_read_full("src/stb_image.c", &file_str);
-    LOG_INFO("\n%s", file_str);
-    file_free(file_str);
+    Shader shader;
+    if (!shader_create_from_file(&shader, "res/shaders/simple.vert", "res/shaders/simple.frag"))
+    {
+        LOG_ERROR("Couldn't create shader 'simple'");
+        return 1;
+    }
 
     while (!window_should_close())
     {
         glClear(GL_COLOR_BUFFER_BIT);
 
+        shader_bind(&shader);
+
         window_poll_events();
         window_swap_buffers();
     }
 
+    shader_destroy(&shader);
     window_destroy();
     return 0;
 }

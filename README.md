@@ -9,7 +9,8 @@ Welcome to **BuoyyVoxel**. This is a voxel game engine I am making entirely in C
 
 ## Engine
 - A simple, black window opens up for no reason at all (I programmed it)
-- OpenGL debug messages with ARB_debug_output OpenGL extension
+- OpenGL debug messages with `ARB_debug_output` OpenGL extension
+- GLSL shaders as separate files
 
 ---
 

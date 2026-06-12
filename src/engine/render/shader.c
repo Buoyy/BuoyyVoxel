@@ -1,21 +1,13 @@
 #include "engine/render/shader.h"
 
+#include "engine/util/file.h"
 #include "engine/util/log.h"
 #include "platform/opengl/gl_debug.h"
 #include <glad/glad.h>
+#include <stdbool.h>
 #include <stdlib.h>
 
 #define INFO_LOG_SIZE 512
-
-static const char *get_shader_type_name(int type)
-{
-    switch (type)
-    {
-        case GL_VERTEX_SHADER:   return "vertex";
-        case GL_FRAGMENT_SHADER: return "fragment";
-        default:                 return "unknown";
-    }
-}
 
 static bool compile_shader(unsigned int id, const char *src)
 {
@@ -26,15 +18,6 @@ static bool compile_shader(unsigned int id, const char *src)
 
     int success;
     glGetShaderiv(id, GL_COMPILE_STATUS, &success);
-    if (!success)
-    {
-        int shader_type;
-        glGetShaderiv(id, GL_SHADER_TYPE, &shader_type);
-        char info_log[INFO_LOG_SIZE];
-        glGetShaderInfoLog(id, INFO_LOG_SIZE, NULL, info_log);
-        GL_CHECK();
-        LOG_ERROR("Error in %s shader: \n%s\n", get_shader_type_name(shader_type), info_log);
-    }
 
     return (bool)success;
 }
@@ -60,7 +43,6 @@ static bool link_shader(unsigned int shader, unsigned int vert, unsigned int fra
 
 bool shader_create(Shader *shader, const char *vert_src, const char *frag_src)
 {
-    LOG_INFO("Hello from shader_create");
     unsigned int vert = glCreateShader(GL_VERTEX_SHADER);
     if (!compile_shader(vert, vert_src))
     {
@@ -89,6 +71,33 @@ bool shader_create(Shader *shader, const char *vert_src, const char *frag_src)
     glDeleteShader(frag);
 
     return true;
+}
+
+bool shader_create_from_file(Shader *shader, const char *vert_path, const char *frag_path)
+{
+    char *vert_src;
+    if (!file_read_full(vert_path, &vert_src))
+    {
+        LOG_ERROR("Couldn't read vertex shader file '%s'", vert_path);
+        return false;
+    }
+    LOG_INFO("Read vertex shader file '%s' successfully", vert_path);
+
+    char *frag_src;
+    if (!file_read_full(frag_path, &frag_src))
+    {
+        LOG_ERROR("Couldn't read fragment shader file '%s'", frag_path);
+        return false;
+    }
+    LOG_INFO("Read fragment shader file '%s' successfully", frag_path);
+
+    LOG_INFO("Creating shader program from given files...");
+    bool result = shader_create(shader, vert_src, frag_src);
+
+    file_free(vert_src);
+    file_free(frag_src);
+
+    return result;
 }
 
 void shader_bind(const Shader *shader)
