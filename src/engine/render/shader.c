@@ -6,7 +6,6 @@
 #include <stdlib.h>
 
 #define INFO_LOG_SIZE 512
-#define SHADER_TYPE_NAME_LENGTH 4
 
 static const char *get_shader_type_name(int type)
 {
@@ -20,8 +19,10 @@ static const char *get_shader_type_name(int type)
 
 static bool compile_shader(unsigned int id, const char *src)
 {
-    glShaderSource(id, 1, (const char **)src, NULL);
+    glShaderSource(id, 1, (const char **)&src, NULL);
+    GL_CHECK();
     glCompileShader(id);
+    GL_CHECK();
 
     int success;
     glGetShaderiv(id, GL_COMPILE_STATUS, &success);
@@ -31,6 +32,7 @@ static bool compile_shader(unsigned int id, const char *src)
         glGetShaderiv(id, GL_SHADER_TYPE, &shader_type);
         char info_log[INFO_LOG_SIZE];
         glGetShaderInfoLog(id, INFO_LOG_SIZE, NULL, info_log);
+        GL_CHECK();
         LOG_ERROR("Error in %s shader: \n%s\n", get_shader_type_name(shader_type), info_log);
     }
 
@@ -42,6 +44,7 @@ static bool link_shader(unsigned int shader, unsigned int vert, unsigned int fra
     glAttachShader(shader, vert);
     glAttachShader(shader, frag);
     glLinkProgram(shader);
+    GL_CHECK();
 
     int success;
     glGetProgramiv(shader, GL_LINK_STATUS, &success);
@@ -57,6 +60,7 @@ static bool link_shader(unsigned int shader, unsigned int vert, unsigned int fra
 
 bool shader_create(Shader *shader, const char *vert_src, const char *frag_src)
 {
+    LOG_INFO("Hello from shader_create");
     unsigned int vert = glCreateShader(GL_VERTEX_SHADER);
     if (!compile_shader(vert, vert_src))
     {
@@ -79,7 +83,20 @@ bool shader_create(Shader *shader, const char *vert_src, const char *frag_src)
         LOG_ERROR("Shader linking failed");
         return false;
     }
-    LOG_ERROR("Shader linking succeeded");
+    LOG_INFO("Shader linking succeeded");
+
+    glDeleteShader(vert);
+    glDeleteShader(frag);
 
     return true;
+}
+
+void shader_bind(const Shader *shader)
+{
+    glUseProgram(shader->id);
+}
+
+void shader_destroy(Shader *shader)
+{
+    glDeleteProgram(shader->id);
 }

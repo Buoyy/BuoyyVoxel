@@ -19,8 +19,6 @@ bool gl_context_init(void)
         LOG_WARN("OpenGL debug output initialization failed");
 #endif
 
-    glBindBuffer(GL_TEXTURE_3D, 69); GL_CHECK();
-
     LOG_INFO("OpenGL Version: %s",
         glGetString(GL_VERSION));
 
