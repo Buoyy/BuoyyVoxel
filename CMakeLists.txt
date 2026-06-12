@@ -31,6 +31,8 @@ set(SOURCE_FILES
     src/glad.c
     
     src/stb_image.c
+
+    src/tests/triangle_test.c
     
     src/engine/util/log.c
     src/engine/util/path.c
