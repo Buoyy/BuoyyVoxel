@@ -35,6 +35,7 @@ set(SOURCE_FILES
     src/engine/util/log.c
     src/engine/util/path.c
     src/engine/util/assert.c
+    src/engine/util/file.c
 
     src/engine/render/shader.c
 
