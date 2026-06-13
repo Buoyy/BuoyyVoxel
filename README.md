@@ -12,6 +12,7 @@ Welcome to **BuoyyVoxel**. This is a voxel game engine I am making entirely in C
 - OpenGL debug messages with `ARB_debug_output` OpenGL extension
 - Shader abstraction with external file support
 - Vertex buffer, element buffer and vertex array abstraction
+- Mesh abstraction with above
 
 ---
 
