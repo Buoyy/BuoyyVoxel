@@ -33,6 +33,7 @@ set(SOURCE_FILES
     src/stb_image.c
 
     src/tests/triangle_test.c
+    src/tests/quad_test.c
     
     src/engine/util/log.c
     src/engine/util/path.c
@@ -41,6 +42,7 @@ set(SOURCE_FILES
 
     src/engine/render/shader.c
     src/engine/render/vertex_buffer.c
+    src/engine/render/element_buffer.c
     src/engine/render/vertex_array.c
 
     src/platform/opengl/gl_debug.c
