@@ -1,6 +1,7 @@
 #include "tests/triangle_test.h"
 
 #include "engine/render/shader.h"
+#include "engine/render/vertex_array.h"
 #include "engine/render/vertex_buffer.h"
 #include "engine/util/log.h"
 #include "platform/opengl/gl_context.h"
@@ -35,15 +36,16 @@ int triangle_test_run(void)
         -0.5f,  -0.5f
     };
 
-    unsigned int vao;
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
+    VertexArray va;
+    vertex_array_create(&va);
+    vertex_array_bind(&va);
 
     VertexBuffer vb;
-    vertex_buffer_create(&vb, vertices, sizeof(vertices), false);
+    vertex_buffer_create(&vb);
+    vertex_buffer_bind(&vb);
+    vertex_buffer_data(vertices, sizeof(vertices), false);
 
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), NULL);
-    glEnableVertexAttribArray(0);
+    vertex_array_add_attribute(0, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), NULL);
 
     shader_bind(&shader);
     while (!window_should_close())
@@ -58,6 +60,7 @@ int triangle_test_run(void)
 
     shader_destroy(&shader);
     vertex_buffer_destroy(&vb);
+    vertex_array_destroy(&va);
     window_destroy();
     return 0;
 }

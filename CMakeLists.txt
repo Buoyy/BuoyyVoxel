@@ -41,6 +41,7 @@ set(SOURCE_FILES
 
     src/engine/render/shader.c
     src/engine/render/vertex_buffer.c
+    src/engine/render/vertex_array.c
 
     src/platform/opengl/gl_debug.c
     src/platform/window/window.c
