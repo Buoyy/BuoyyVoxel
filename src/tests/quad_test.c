@@ -2,12 +2,14 @@
 
 #include "engine/render/mesh.h"
 #include "engine/render/shader.h"
+#include "engine/render/texture.h"
 #include "engine/util/log.h"
 #include "engine/util/common.h"
 #include "engine/render/primitives.h"
 #include "platform/opengl/gl_context.h"
 #include <glad/glad.h>
 #include <stdbool.h>
+#include <stb_image.h>
 #include "platform/window/window.h"
 
 int quad_test_run(void)
@@ -23,17 +25,23 @@ int quad_test_run(void)
     }
 
     Shader shader;
-    if (!shader_create_from_file(&shader, "res/shaders/simple.vert", "res/shaders/simple.frag"))
+    if (!shader_create_from_file(&shader, 
+        "res/shaders/textured_quad.vert", "res/shaders/textured_quad.frag"))
     {
         LOG_ERROR("Couldn't create shader 'simple'");
         return 1;
     }
+    shader_bind(&shader);
+
+    stbi_set_flip_vertically_on_load(true);
+    Texture dirt;
+    texture_create_default(&dirt, 0, "res/images/dirt.png", GL_RGBA);
+    shader_set_int(&shader, "tex", 0);
 
     Mesh quad;
     mesh_create(&quad, quad_vertices, ARR_LEN(quad_vertices), 
         quad_indices, ARR_LEN(quad_indices));
 
-    shader_bind(&shader);
     while (!window_should_close())
     {
         mesh_draw(&quad);

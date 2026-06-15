@@ -1,8 +1,8 @@
 #version 330 core 
 
-out vec4 final_color;
+out vec4 result;
 
 void main()
 {
-	final_color = vec4(0.1, 0.4, 0.5, 1.0);
+    result = vec4(0.1, 0.4, 0.5, 1.0);
 }

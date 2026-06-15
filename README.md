@@ -13,6 +13,7 @@ Welcome to **BuoyyVoxel**. This is a voxel game engine I am making entirely in C
 - Shader abstraction with external file support
 - Vertex buffer, element buffer and vertex array abstraction
 - Mesh abstraction with above
+- Texture abstraction
 - Camera system (currently orbitting the aforementioned cube)
 - Transforms (Position, Rotation and Scale)
 
