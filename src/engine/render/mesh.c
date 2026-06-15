@@ -29,6 +29,8 @@ void mesh_create(Mesh *mesh,
 
     vertex_array_add_attribute(0, 3, GL_FLOAT, GL_FALSE, 
         sizeof(Vertex), (void *)offsetof(Vertex, position));
+    vertex_array_add_attribute(1, 2, GL_FLOAT, GL_FALSE, 
+        sizeof(Vertex), (void *)offsetof(Vertex, uv));
 }
 
 void mesh_draw(const Mesh *mesh)

@@ -7,6 +7,7 @@ typedef struct Vertex Vertex;
 struct Vertex
 {
     vec3 position;
+    vec2 uv;
 };
 
 #endif
