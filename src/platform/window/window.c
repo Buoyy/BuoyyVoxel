@@ -4,7 +4,7 @@
 #include <GLFW/glfw3.h>
 #include "engine/util/log.h"
 
-static GLFWwindow *window;
+GLFWwindow *window; // global window
 
 bool window_create(int width, int height, const char *title)
 {

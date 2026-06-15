@@ -41,6 +41,9 @@ set(SOURCE_FILES
     src/engine/util/assert.c
     src/engine/util/file.c
 
+    src/engine/core/time.c 
+    src/engine/core/input.c
+
     src/engine/render/shader.c
     src/engine/render/vertex_buffer.c
     src/engine/render/element_buffer.c

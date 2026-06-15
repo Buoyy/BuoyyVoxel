@@ -1,6 +1,8 @@
 #include "tests/cube_test.h"
 
 #include <GLFW/glfw3.h>
+#include "engine/core/input.h"
+#include "engine/core/time.h"
 #include "platform/window/window.h"
 #include "engine/util/log.h"
 #include "engine/util/common.h"
@@ -27,6 +29,8 @@ int cube_test_run(void)
         window_destroy();
         return 1;
     }
+
+    input_init();
 
     Camera camera;
     camera_create(&camera, SCR_WIDTH, SCR_HEIGHT);
@@ -56,6 +60,11 @@ int cube_test_run(void)
     while (!window_should_close())
     {
         window_poll_events();
+        input_update();
+        time_update();
+
+        if (input_key_down(GLFW_KEY_ESCAPE))
+            glfwSetWindowShouldClose(window, true);
 
         vec3 cam_pos = 
         {
