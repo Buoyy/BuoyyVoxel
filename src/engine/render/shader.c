@@ -132,7 +132,7 @@ void shader_set_float(const Shader *shader, const char *identifier, const float 
     glUniform1f(location, value);
 }
 
-void shader_set_vec3(const Shader *shader, const char *identifier, const float *value)
+void shader_set_vec3(const Shader *shader, const char *identifier, const vec3 value)
 {
     int location = glGetUniformLocation(shader->id, identifier);
     if (location < 0)
@@ -143,7 +143,7 @@ void shader_set_vec3(const Shader *shader, const char *identifier, const float *
     glUniform3fv(location, 1, value);
 }
 
-void shader_set_mat4(const Shader *shader, const char *identifier, const vec4 *value)
+void shader_set_mat4(const Shader *shader, const char *identifier, const mat4 value)
 {
     int location = glGetUniformLocation(shader->id, identifier);
     if (location < 0)

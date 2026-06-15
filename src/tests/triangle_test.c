@@ -5,9 +5,9 @@
 #include "engine/render/vertex_buffer.h"
 #include "engine/util/log.h"
 #include "platform/opengl/gl_context.h"
+#include "engine/render/primitives.h"
 #include <glad/glad.h>
 #include <stdbool.h>
-#include <stdlib.h>
 #include "platform/window/window.h"
 
 int triangle_test_run(void)
@@ -29,13 +29,6 @@ int triangle_test_run(void)
         return 1;
     }
 
-    const float vertices[] = 
-    {
-         0.0f,   0.5f, 
-         0.5f,  -0.5f,
-        -0.5f,  -0.5f
-    };
-
     VertexArray va;
     vertex_array_create(&va);
     vertex_array_bind(&va);
@@ -43,15 +36,13 @@ int triangle_test_run(void)
     VertexBuffer vb;
     vertex_buffer_create(&vb);
     vertex_buffer_bind(&vb);
-    vertex_buffer_data(vertices, sizeof(vertices), false);
+    vertex_buffer_data(triangle_vertices, sizeof(triangle_vertices), false);
 
     vertex_array_add_attribute(0, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), NULL);
 
     shader_bind(&shader);
     while (!window_should_close())
     {
-        glClear(GL_COLOR_BUFFER_BIT);
-
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
         window_poll_events();

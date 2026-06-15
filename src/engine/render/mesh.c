@@ -25,7 +25,7 @@ void mesh_create(Mesh *mesh,
     element_buffer_data(indices, size_indices, false);
     mesh->element_count = size_indices/sizeof(unsigned int);
 
-    vertex_array_add_attribute(0, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), 0);
+    vertex_array_add_attribute(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), 0);
 }
 
 void mesh_draw(const Mesh *mesh)

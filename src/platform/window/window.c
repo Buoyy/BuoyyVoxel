@@ -1,5 +1,6 @@
 #include "platform/window/window.h"
 
+#include <GL/gl.h>
 #include <GLFW/glfw3.h>
 #include "engine/util/log.h"
 
@@ -31,6 +32,8 @@ bool window_create(int width, int height, const char *title)
     LOG_INFO("Successfully created window of resolution %dx%d named '%s'", 
         width, height, title);
 
+    glEnable(GL_DEPTH_TEST);
+
     return true;
 }
 
@@ -47,6 +50,7 @@ void window_poll_events(void)
 void window_swap_buffers(void)
 {
     glfwSwapBuffers(window);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void window_destroy(void)

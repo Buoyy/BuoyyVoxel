@@ -3,6 +3,7 @@
 #include "engine/render/mesh.h"
 #include "engine/render/shader.h"
 #include "engine/util/log.h"
+#include "engine/render/primitives.h"
 #include "platform/opengl/gl_context.h"
 #include <glad/glad.h>
 #include <stdbool.h>
@@ -27,28 +28,13 @@ int quad_test_run(void)
         return 1;
     }
 
-    const float vertices[] = 
-    {
-        -0.5f,  -0.5f, 
-         0.5f,  -0.5f,
-         0.5f,   0.5f,
-        -0.5f,   0.5f
-    };
-
-    const unsigned int indices[] = 
-    {
-        0, 1, 2,
-        2, 3, 0
-    };
-
     Mesh quad;
-    mesh_create(&quad, vertices, sizeof(vertices), indices, sizeof(indices));
+    mesh_create(&quad, quad_vertices, sizeof(quad_vertices), 
+        quad_indices, sizeof(quad_indices));
 
     shader_bind(&shader);
     while (!window_should_close())
     {
-        glClear(GL_COLOR_BUFFER_BIT);
-
         mesh_draw(&quad);
 
         window_poll_events();
