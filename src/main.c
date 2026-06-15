@@ -1,8 +1,13 @@
-// #include "tests/triangle_test.h"
-// #include "tests/quad_test.h"
-#include "tests/cube_test.h"
+#include "engine/core/game.h"
 
-int main(void)
+int main()
 {
-    return cube_test_run();
+    if (!game_init())
+        return 1;
+    while (game_running())
+    {
+        game_update();
+        game_render();
+    }
+    game_shutdown();
 }

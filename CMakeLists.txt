@@ -32,9 +32,9 @@ set(SOURCE_FILES
     
     src/stb_image.c
 
-    src/tests/triangle_test.c
-    src/tests/quad_test.c
-    src/tests/cube_test.c
+    # src/tests/triangle_test.c
+    # src/tests/quad_test.c
+    # src/tests/cube_test.c
 
     src/engine/util/log.c
     src/engine/util/path.c
@@ -43,6 +43,7 @@ set(SOURCE_FILES
 
     src/engine/core/time.c 
     src/engine/core/input.c
+    src/engine/core/game.c
 
     src/engine/render/shader.c
     src/engine/render/vertex_buffer.c
