@@ -109,3 +109,47 @@ void shader_destroy(Shader *shader)
 {
     glDeleteProgram(shader->id);
 }
+
+void shader_set_int(const Shader *shader, const char *identifier, const int value)
+{
+    int location = glGetUniformLocation(shader->id, identifier);
+    if (location < 0)
+    {
+        LOG_ERROR("Uniform named '%s' was not found.", identifier);
+        return;
+    }
+    glUniform1i(location, value);
+}
+
+void shader_set_float(const Shader *shader, const char *identifier, const float value)
+{
+    int location = glGetUniformLocation(shader->id, identifier);
+    if (location < 0)
+    {
+        LOG_ERROR("Uniform named '%s' was not found.", identifier);
+        return;
+    }
+    glUniform1f(location, value);
+}
+
+void shader_set_vec3(const Shader *shader, const char *identifier, const float *value)
+{
+    int location = glGetUniformLocation(shader->id, identifier);
+    if (location < 0)
+    {
+        LOG_ERROR("Uniform named '%s' was not found.", identifier);
+        return;
+    }
+    glUniform3fv(location, 1, value);
+}
+
+void shader_set_mat4(const Shader *shader, const char *identifier, const vec4 *value)
+{
+    int location = glGetUniformLocation(shader->id, identifier);
+    if (location < 0)
+    {
+        LOG_ERROR("Uniform named '%s' was not found.", identifier);
+        return;
+    }
+    glUniformMatrix4fv(location, 1, GL_FALSE, &value[0][0]);
+}

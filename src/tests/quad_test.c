@@ -10,7 +10,7 @@
 
 int quad_test_run(void)
 {
-    LOG_INFO("RUNNING TEST: triangle_test.c");
+    LOG_INFO("RUNNING TEST: quad_test.c");
     if (!window_create(1280, 720, "BuoyyVoxel"))
         return 1;
 
