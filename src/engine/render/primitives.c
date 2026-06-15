@@ -1,18 +1,18 @@
 #include "engine/render/primitives.h"
 
-const float triangle_vertices[] = 
+const Vertex triangle_vertices[] = 
 {
-     0.0f,   0.5f, 0.0f,
-     0.5f,  -0.5f, 0.0f,
-    -0.5f,  -0.5f, 0.0f
+    { { 0.0f,   0.5f, 0.0f } },
+    { { 0.5f,  -0.5f, 0.0f } },
+    { {-0.5f,  -0.5f, 0.0f } }
 };
 
-const float quad_vertices[] = 
+const Vertex quad_vertices[] = 
 {
-    -0.5f,  -0.5f, 0.0f,
-     0.5f,  -0.5f, 0.0f,
-     0.5f,   0.5f, 0.0f,
-    -0.5f,   0.5f, 0.0f,
+    { { -0.5f,  -0.5f, 0.0f } },
+    { {  0.5f,  -0.5f, 0.0f } },
+    { {  0.5f,   0.5f, 0.0f } },
+    { { -0.5f,   0.5f, 0.0f } },
 };
 
 const unsigned int quad_indices[] = 
@@ -21,43 +21,43 @@ const unsigned int quad_indices[] =
     2, 3, 0
 };
 
-const float cube_vertices[] = 
+const Vertex cube_vertices[] = 
 {
     // Front face
-    -0.5f, -0.5f,  0.5f,
-     0.5f, -0.5f,  0.5f,
-     0.5f,  0.5f,  0.5f,
-    -0.5f,  0.5f,  0.5f,
+    { { -0.5f, -0.5f,  0.5f } },
+    { {  0.5f, -0.5f,  0.5f } },
+    { {  0.5f,  0.5f,  0.5f } },
+    { { -0.5f,  0.5f,  0.5f } },
 
     // Back face
-    -0.5f, -0.5f, -0.5f,
-     0.5f, -0.5f, -0.5f,
-     0.5f,  0.5f, -0.5f,
-    -0.5f,  0.5f, -0.5f,
+    { { -0.5f, -0.5f, -0.5f } },
+    { {  0.5f, -0.5f, -0.5f } },
+    { {  0.5f,  0.5f, -0.5f } },
+    { { -0.5f,  0.5f, -0.5f } },
 
     // Left face
-    -0.5f, -0.5f,  0.5f,
-    -0.5f, -0.5f, -0.5f,
-    -0.5f,  0.5f, -0.5f,
-    -0.5f,  0.5f,  0.5f,
+    { { -0.5f, -0.5f,  0.5f } },
+    { { -0.5f, -0.5f, -0.5f } },
+    { { -0.5f,  0.5f, -0.5f } },
+    { { -0.5f,  0.5f,  0.5f } },
 
     // Right face
-     0.5f, -0.5f,  0.5f,
-     0.5f, -0.5f, -0.5f,
-     0.5f,  0.5f, -0.5f,
-     0.5f,  0.5f,  0.5f,
+    { {  0.5f, -0.5f,  0.5f } },
+    { {  0.5f, -0.5f, -0.5f } },
+    { {  0.5f,  0.5f, -0.5f } },
+    { {  0.5f,  0.5f,  0.5f } },
 
     // Top face
-    -0.5f,  0.5f,  0.5f,
-     0.5f,  0.5f,  0.5f,
-     0.5f,  0.5f, -0.5f,
-    -0.5f,  0.5f, -0.5f,
+    { { -0.5f,  0.5f,  0.5f } },
+    { {  0.5f,  0.5f,  0.5f } },
+    { {  0.5f,  0.5f, -0.5f } },
+    { { -0.5f,  0.5f, -0.5f } },
 
     // Bottom face
-    -0.5f, -0.5f,  0.5f,
-     0.5f, -0.5f,  0.5f,
-     0.5f, -0.5f, -0.5f,
-    -0.5f, -0.5f, -0.5f,
+    { { -0.5f, -0.5f,  0.5f } },
+    { {  0.5f, -0.5f,  0.5f } },
+    { {  0.5f, -0.5f, -0.5f } },
+    { { -0.5f, -0.5f, -0.5f } },
 };
 
 const unsigned int cube_indices[] = 

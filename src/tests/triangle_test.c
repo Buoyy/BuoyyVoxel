@@ -38,7 +38,7 @@ int triangle_test_run(void)
     vertex_buffer_bind(&vb);
     vertex_buffer_data(triangle_vertices, sizeof(triangle_vertices), false);
 
-    vertex_array_add_attribute(0, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), NULL);
+    vertex_array_add_attribute(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), NULL);
 
     shader_bind(&shader);
     while (!window_should_close())

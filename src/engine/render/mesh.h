@@ -4,6 +4,7 @@
 #include "engine/render/element_buffer.h"
 #include "engine/render/vertex_array.h"
 #include "engine/render/vertex_buffer.h"
+#include "engine/render/vertex.h"
 
 typedef struct Mesh Mesh;
 struct Mesh
@@ -16,8 +17,8 @@ struct Mesh
 };
 
 void mesh_create(Mesh *mesh, 
-    const void *vertices,          size_t size_vertices,
-    const unsigned int  *indices,  size_t size_indices);
+    const Vertex *vertices,          size_t vertices_count,
+    const unsigned int *indices,     size_t indices_count);
 void mesh_draw(const Mesh *mesh);
 void mesh_destroy(Mesh *mesh);
 

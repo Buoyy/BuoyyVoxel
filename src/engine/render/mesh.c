@@ -1,31 +1,34 @@
 #include "engine/render/mesh.h"
 
 #include "engine/render/element_buffer.h"
+#include "engine/render/vertex.h"
 #include "engine/render/vertex_array.h"
 #include "engine/render/vertex_buffer.h"
 #include "engine/util/assert.h"
 #include <glad/glad.h>
+#include <stddef.h>
 
 void mesh_create(Mesh *mesh, 
-    const void *vertices,          size_t size_vertices,
-    const unsigned int  *indices,  size_t size_indices)
+    const Vertex *vertices,          size_t vertices_count,
+    const unsigned int *indices,     size_t indices_count)
 {
-    ASSERT(size_vertices != 0);
-    ASSERT(size_indices != 0);
+    ASSERT(vertices_count != 0);
+    ASSERT(indices_count != 0);
 
     vertex_array_create(&mesh->va);
     vertex_array_bind(&mesh->va);
 
     vertex_buffer_create(&mesh->vb);
     vertex_buffer_bind(&mesh->vb);
-    vertex_buffer_data(vertices, size_vertices, false);
+    vertex_buffer_data(vertices, vertices_count*sizeof(Vertex), false);
 
     element_buffer_create(&mesh->eb);
     element_buffer_bind(&mesh->eb);
-    element_buffer_data(indices, size_indices, false);
-    mesh->element_count = size_indices/sizeof(unsigned int);
+    element_buffer_data(indices, indices_count*sizeof(unsigned int), false);
+    mesh->element_count = indices_count;
 
-    vertex_array_add_attribute(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), 0);
+    vertex_array_add_attribute(0, 3, GL_FLOAT, GL_FALSE, 
+        sizeof(Vertex), (void *)offsetof(Vertex, position));
 }
 
 void mesh_draw(const Mesh *mesh)

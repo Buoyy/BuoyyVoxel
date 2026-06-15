@@ -3,6 +3,7 @@
 #include "engine/render/mesh.h"
 #include "engine/render/shader.h"
 #include "engine/util/log.h"
+#include "engine/util/common.h"
 #include "engine/render/primitives.h"
 #include "platform/opengl/gl_context.h"
 #include <glad/glad.h>
@@ -29,8 +30,8 @@ int quad_test_run(void)
     }
 
     Mesh quad;
-    mesh_create(&quad, quad_vertices, sizeof(quad_vertices), 
-        quad_indices, sizeof(quad_indices));
+    mesh_create(&quad, quad_vertices, ARR_LEN(quad_vertices), 
+        quad_indices, ARR_LEN(quad_indices));
 
     shader_bind(&shader);
     while (!window_should_close())

@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 #include "platform/window/window.h"
 #include "engine/util/log.h"
+#include "engine/util/common.h"
 #include "engine/render/shader.h"
 #include "engine/render/mesh.h"
 #include "engine/render/primitives.h"
@@ -38,8 +39,8 @@ int cube_test_run(void)
     shader_set_mat4(&shader, "projection", camera.projection);
 
     Mesh cube;
-    mesh_create(&cube, cube_vertices, sizeof(cube_vertices), 
-        cube_indices, sizeof(cube_indices));
+    mesh_create(&cube, cube_vertices, ARR_LEN(cube_vertices), 
+        cube_indices, ARR_LEN(cube_indices));
 
     float orbit_radius = 3.0f;
 
