@@ -51,3 +51,23 @@ void camera_rotate(Camera *camera, float dx, float dy)
 
     camera->pitch = glm_clamp(camera->pitch, -88.0f, 88.0f);
 }
+
+void camera_move(Camera *camera, CameraMovement direction, float amount)
+{
+    vec3 displacement;
+    switch (direction)
+    {
+    case CAMERA_FRONT:
+        glm_vec3_scale(camera->front, amount, displacement);
+        break;
+    case CAMERA_RIGHT:
+        glm_vec3_scale(camera->right, amount, displacement);
+        break;
+    case CAMERA_WORLD_UP:
+        glm_vec3_scale((vec3){0,1,0}, amount, displacement);
+        break;
+    default:
+        break;
+    }
+    glm_vec3_add(camera->position, displacement, camera->position);
+}

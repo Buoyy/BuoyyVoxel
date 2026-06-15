@@ -17,7 +17,7 @@ Welcome to **BuoyyVoxel**. This is a voxel game engine I am making entirely in C
 
 ### Engine
 - Time and Input module
-- Camera system (currently orbitting the aforementioned cube)
+- Free Camera system, move around with WASD and rotate with mouse (change mouse_invert in engine/core/input.c if you need to)
 - Transforms (Position, Rotation and Scale)
 
 ---

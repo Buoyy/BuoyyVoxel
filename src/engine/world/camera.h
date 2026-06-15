@@ -16,9 +16,18 @@ struct Camera
     mat4 projection, view;
 };
 
+typedef enum CameraMovement CameraMovement;
+enum CameraMovement
+{
+    CAMERA_FRONT,
+    CAMERA_RIGHT,
+    CAMERA_WORLD_UP
+};
+
 void camera_create(Camera *camera, float width, float height);
 void camera_update(Camera *camera);
 
 void camera_rotate(Camera *camera, float dx, float dy);
+void camera_move(Camera *camera, CameraMovement direction, float amount);
 
 #endif

@@ -18,6 +18,9 @@
 #define SCR_WIDTH 1280
 #define SCR_HEIGHT 720
 
+static void camera_handle_input(Camera *camera);
+static float camera_speed = 3.0f;
+
 int cube_test_run(void)
 {
     LOG_INFO("RUNNING TEST: cube_test.c");
@@ -74,8 +77,7 @@ int cube_test_run(void)
         // };
         // glm_vec3_copy(cam_pos, camera.position);
 
-        camera_rotate(&camera, 
-            mouse_sens*input_mouse_dy(), mouse_sens*input_mouse_dx());
+        camera_handle_input(&camera);
         camera_update(&camera);
         // glm_lookat(camera.position, GLM_VEC3_ZERO, camera.up, camera.view);
         shader_set_mat4(&shader, "view", camera.view);
@@ -93,4 +95,22 @@ int cube_test_run(void)
     mesh_destroy(&cube);
     window_destroy();
     return 0;
+}
+
+static void camera_handle_input(Camera *camera)
+{
+    camera_rotate(camera, 
+            mouse_sens*input_mouse_dy(), mouse_sens*input_mouse_dx());
+    if (input_key_down(GLFW_KEY_W))
+        camera_move(camera, CAMERA_FRONT, camera_speed*delta_time);
+    if (input_key_down(GLFW_KEY_S))
+        camera_move(camera, CAMERA_FRONT, -camera_speed*delta_time);
+    if (input_key_down(GLFW_KEY_D))
+        camera_move(camera, CAMERA_RIGHT, camera_speed*delta_time);
+    if (input_key_down(GLFW_KEY_A))
+        camera_move(camera, CAMERA_RIGHT, -camera_speed*delta_time);
+    if (input_key_down(GLFW_KEY_SPACE))
+        camera_move(camera, CAMERA_WORLD_UP, camera_speed*delta_time);
+    if (input_key_down(GLFW_KEY_LEFT_SHIFT))
+        camera_move(camera, CAMERA_WORLD_UP, -camera_speed*delta_time);
 }
