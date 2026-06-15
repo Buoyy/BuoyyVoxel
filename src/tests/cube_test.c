@@ -6,6 +6,7 @@
 #include "engine/util/common.h"
 #include "engine/render/shader.h"
 #include "engine/render/mesh.h"
+#include "engine/render/texture.h"
 #include "engine/render/primitives.h"
 #include "engine/world/camera.h"
 #include "engine/world/transform.h"
@@ -31,13 +32,18 @@ int cube_test_run(void)
     camera_create(&camera, SCR_WIDTH, SCR_HEIGHT);
 
     Shader shader;
-    if (!shader_create_from_file(&shader, "res/shaders/simple.vert", "res/shaders/simple.frag"))
+    if (!shader_create_from_file(&shader, 
+        "res/shaders/textured_cube.vert", "res/shaders/textured_cube.frag"))
     {
         LOG_ERROR("Couldn't create shader 'simple'");
         return 1;
     }
     shader_bind(&shader);
     shader_set_mat4(&shader, "projection", camera.projection);
+
+    Texture dirt;
+    texture_create_default(&dirt, 0, "res/images/dirt.png", GL_RGBA);
+    shader_set_int(&shader, "tex", 0);
 
     Mesh cube;
     mesh_create(&cube, cube_vertices, ARR_LEN(cube_vertices), 
