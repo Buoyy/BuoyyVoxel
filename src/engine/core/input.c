@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 
 bool mouse_inverted = false;
+float mouse_sens = 0.1f;
 
 static double last_mouse_x;
 static double last_mouse_y;

@@ -19,4 +19,6 @@ struct Camera
 void camera_create(Camera *camera, float width, float height);
 void camera_update(Camera *camera);
 
+void camera_rotate(Camera *camera, float dx, float dy);
+
 #endif

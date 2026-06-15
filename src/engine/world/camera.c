@@ -43,3 +43,11 @@ void camera_update(Camera *camera)
     vec3 target; glm_vec3_add(camera->position, camera->front, target);
     glm_lookat(camera->position, target, camera->up, camera->view);
 }
+
+void camera_rotate(Camera *camera, float dx, float dy)
+{
+    camera->pitch += dx;
+    camera->yaw   += dy;
+
+    camera->pitch = glm_clamp(camera->pitch, -88.0f, 88.0f);
+}

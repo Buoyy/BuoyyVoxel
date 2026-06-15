@@ -55,7 +55,7 @@ int cube_test_run(void)
     Transform cube_transform;
     transform_create(&cube_transform);
 
-    float orbit_radius = 3.0f;
+    // float orbit_radius = 3.0f;
 
     while (!window_should_close())
     {
@@ -66,19 +66,21 @@ int cube_test_run(void)
         if (input_key_down(GLFW_KEY_ESCAPE))
             glfwSetWindowShouldClose(window, true);
 
-        vec3 cam_pos = 
-        {
-            orbit_radius*cos(glfwGetTime()),
-            1.0f,
-            orbit_radius*sin(glfwGetTime())
-        };
-        glm_vec3_copy(cam_pos, camera.position);
+        // vec3 cam_pos = 
+        // {
+        //     orbit_radius*cos(glfwGetTime()),
+        //     1.0f,
+        //     orbit_radius*sin(glfwGetTime())
+        // };
+        // glm_vec3_copy(cam_pos, camera.position);
 
-        // camera_update(&camera);
-        glm_lookat(camera.position, GLM_VEC3_ZERO, camera.up, camera.view);
+        camera_rotate(&camera, 
+            mouse_sens*input_mouse_dy(), mouse_sens*input_mouse_dx());
+        camera_update(&camera);
+        // glm_lookat(camera.position, GLM_VEC3_ZERO, camera.up, camera.view);
         shader_set_mat4(&shader, "view", camera.view);
 
-        // Rotate cube too
+        // Rotate cube (like crazy)
         glm_vec3_copy((vec3){0, 0, 0.3*fabs(sin(glfwGetTime()))}, cube_transform.rotation);
         transform_update(&cube_transform);
         shader_set_mat4(&shader, "model", cube_transform.model);

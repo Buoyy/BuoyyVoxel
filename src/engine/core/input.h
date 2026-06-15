@@ -4,6 +4,7 @@
 #include <stdbool.h>
 
 extern bool mouse_inverted;
+extern float mouse_sens;
 
 void input_init(void);
 void input_update(void);
