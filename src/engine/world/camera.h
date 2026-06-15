@@ -1,5 +1,5 @@
-#ifndef BV_ENGINE_RENDER_CAMERA_H
-#define BV_ENGINE_RENDER_CAMERA_H
+#ifndef BV_ENGINE_WORLD_CAMERA_H
+#define BV_ENGINE_WORLD_CAMERA_H
 
 #include <cglm/types.h>
 

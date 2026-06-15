@@ -47,7 +47,9 @@ set(SOURCE_FILES
     src/engine/render/vertex_array.c
     src/engine/render/mesh.c
     src/engine/render/primitives.c
-    src/engine/render/camera.c
+    
+    src/engine/world/camera.c
+    src/engine/world/transform.c
 
     src/platform/opengl/gl_debug.c
     src/platform/window/window.c

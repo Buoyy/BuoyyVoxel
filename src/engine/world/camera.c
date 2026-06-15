@@ -1,4 +1,4 @@
-#include "engine/render/camera.h"
+#include "engine/world/camera.h"
 
 #include "engine/util/log.h"
 #include <cglm/cglm.h>

@@ -7,7 +7,8 @@
 #include "engine/render/shader.h"
 #include "engine/render/mesh.h"
 #include "engine/render/primitives.h"
-#include "engine/render/camera.h"
+#include "engine/world/camera.h"
+#include "engine/world/transform.h"
 #include "platform/opengl/gl_context.h"
 #include <cglm/cglm.h>
 
@@ -41,6 +42,8 @@ int cube_test_run(void)
     Mesh cube;
     mesh_create(&cube, cube_vertices, ARR_LEN(cube_vertices), 
         cube_indices, ARR_LEN(cube_indices));
+    Transform cube_transform;
+    transform_create(&cube_transform);
 
     float orbit_radius = 3.0f;
 
@@ -59,6 +62,11 @@ int cube_test_run(void)
         // camera_update(&camera);
         glm_lookat(camera.position, GLM_VEC3_ZERO, camera.up, camera.view);
         shader_set_mat4(&shader, "view", camera.view);
+
+        // Rotate cube too
+        glm_vec3_copy((vec3){0, 0, 0.3*fabs(sin(glfwGetTime()))}, cube_transform.rotation);
+        transform_update(&cube_transform);
+        shader_set_mat4(&shader, "model", cube_transform.model);
 
         mesh_draw(&cube);
         window_swap_buffers();
