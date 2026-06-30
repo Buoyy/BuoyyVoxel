@@ -51,6 +51,7 @@ void window_swap_buffers(void)
 {
     glfwSwapBuffers(window);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClearColor(135.0f/255, 206.0f/255, 235.0f/255, 1.0f);
 }
 
 void window_destroy(void)

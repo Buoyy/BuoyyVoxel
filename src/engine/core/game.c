@@ -1,6 +1,5 @@
 #include "engine/core/game.h"
 
-#include "cglm/vec3.h"
 #include "engine/core/input.h"
 #include "engine/core/time.h"
 #include "engine/render/mesh.h"
@@ -10,9 +9,9 @@
 #include "engine/util/common.h"
 #include "engine/util/log.h"
 #include "engine/world/camera.h"
-#include "engine/world/transform.h"
 #include "platform/opengl/gl_context.h"
 #include "platform/window/window.h"
+#include <cglm/mat4.h>
 #include <stdbool.h>
 
 #define SCR_WIDTH 1280
@@ -24,7 +23,6 @@ static float camera_speed = 3.0f;
 static Shader shader;
 static Texture texture;
 static Mesh mesh;
-static Transform cube_transform;
 
 static void camera_handle_input(Camera *camera);
 
@@ -59,7 +57,6 @@ bool game_init(void)
 
     mesh_create(&mesh, cube_vertices, ARR_LEN(cube_vertices), 
         cube_indices, ARR_LEN(cube_indices));
-    transform_create(&cube_transform);
 
     return true;
 }
@@ -79,15 +76,12 @@ void game_update(void)
         glfwSetWindowShouldClose(window, true);
     camera_handle_input(&camera);
     camera_update(&camera);
-
-    glm_vec3_copy((vec3){0, 0, 0.3*fabs(sin(glfwGetTime()))}, cube_transform.rotation);
-    transform_update(&cube_transform);
 }
 
 void game_render(void)
 {
+    shader_set_mat4(&shader, "model", GLM_MAT4_IDENTITY);
     shader_set_mat4(&shader, "view", camera.view);
-    shader_set_mat4(&shader, "model", cube_transform.model);
     mesh_draw(&mesh);
     window_swap_buffers();
 }
