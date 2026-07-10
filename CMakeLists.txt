@@ -40,6 +40,7 @@ set(SOURCE_FILES
     src/engine/util/path.c
     src/engine/util/assert.c
     src/engine/util/file.c
+    src/engine/util/dyn_array.c
 
     src/engine/core/time.c 
     src/engine/core/input.c
@@ -55,6 +56,7 @@ set(SOURCE_FILES
     
     src/engine/world/camera.c
     src/engine/world/transform.c
+    src/engine/world/chunk.c
 
     src/platform/opengl/gl_debug.c
     src/platform/window/window.c
