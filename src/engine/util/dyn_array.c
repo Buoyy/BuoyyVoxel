@@ -106,11 +106,11 @@ void da_remove(DynArray *da, size_t index)
         return;
     }
 
-    char *dest = (char*)da->data + index * da->element_size;
-    char *src  = (char*)da->data + (index + 1) * da->element_size;
+    char *p_curr_element = (char*)da->data + index * da->element_size;
+    char *p_next_element  = (char*)da->data + (index + 1) * da->element_size;
     size_t bytes_to_move = (da->length - index - 1) * da->element_size;
 
-    memmove(dest, src, bytes_to_move);
+    memmove(p_curr_element, p_next_element, bytes_to_move);
     da->length--;
 }
 
