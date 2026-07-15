@@ -33,9 +33,9 @@ bool chunk_create(Chunk *chunk)
         {
             for (int z = 0; z < CHUNK_SIZE_Z; ++z)
             {
-                if ((x > 1 && x < CHUNK_SIZE_X - 1)
-                    && (y > 1 && y < CHUNK_SIZE_Y - 1)
-                    && (z > 1 && z < CHUNK_SIZE_Z - 1)) continue;
+                if ((x > 0 && x < CHUNK_SIZE_X - 1)
+                    && (y > 0 && y < CHUNK_SIZE_Y - 1)
+                    && (z > 0 && z < CHUNK_SIZE_Z - 1)) continue;
                 chunk_set(chunk, x, y, z, dirt);
             }
         }
@@ -105,8 +105,8 @@ void chunk_create_mesh(Chunk *chunk)
 
     // Send the acquired vertex and index data to the mesh
     mesh_create(&chunk->mesh, vertices.data, vertices.length, indices.data, indices.length);
-    // da_deinit(&vertices);
-    // da_deinit(&indices);
+    da_deinit(&vertices);
+    da_deinit(&indices);
 }
 
 Block *chunk_get(Chunk *chunk, int x, int y, int z)
