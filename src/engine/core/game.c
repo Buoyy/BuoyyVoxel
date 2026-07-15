@@ -3,12 +3,11 @@
 #include "engine/core/input.h"
 #include "engine/core/time.h"
 #include "engine/render/mesh.h"
-#include "engine/render/primitives.h"
 #include "engine/render/shader.h"
 #include "engine/render/texture.h"
-#include "engine/util/common.h"
 #include "engine/util/log.h"
 #include "engine/world/camera.h"
+#include "engine/world/chunk.h"
 #include "platform/opengl/gl_context.h"
 #include "platform/window/window.h"
 #include <cglm/mat4.h>
@@ -22,7 +21,7 @@ static float camera_speed = 3.0f;
 
 static Shader shader;
 static Texture texture;
-static Mesh mesh;
+static Chunk chunk;
 
 static void camera_handle_input(Camera *camera);
 
@@ -55,8 +54,8 @@ bool game_init(void)
     texture_create_default(&texture, 0, "res/images/dirt.png", GL_RGBA);
     shader_set_int(&shader, "tex", 0);
 
-    mesh_create(&mesh, cube_vertices, ARR_LEN(cube_vertices), 
-        cube_indices, ARR_LEN(cube_indices));
+    chunk_create(&chunk);
+    chunk_create_mesh(&chunk);
 
     return true;
 }
@@ -82,7 +81,7 @@ void game_render(void)
 {
     shader_set_mat4(&shader, "model", GLM_MAT4_IDENTITY);
     shader_set_mat4(&shader, "view", camera.view);
-    mesh_draw(&mesh);
+    mesh_draw(&chunk.mesh);
     window_swap_buffers();
 }
 
@@ -91,7 +90,7 @@ void game_shutdown(void)
     LOG_INFO("Shutting down game...");
     shader_destroy(&shader);
     texture_destroy(&texture);
-    mesh_destroy(&mesh);
+    chunk_destroy(&chunk);
     window_destroy();
 }
 

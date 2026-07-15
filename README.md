@@ -8,7 +8,7 @@ Welcome to **BuoyyVoxel**. This is a voxel game engine I am making entirely in C
 - Visible debugging for OpenGL
 
 ### Rendering
-- A simple window opens up and shows a dirt block rotating like crazy for no reason at all (I programmed it)
+- A simple window opens up and shows a chunk (a shell of dirt)
 - OpenGL debug messages with `ARB_debug_output` OpenGL extension
 - Shader abstraction with external file support
 - Vertex buffer, element buffer and vertex array abstraction
@@ -23,7 +23,7 @@ Welcome to **BuoyyVoxel**. This is a voxel game engine I am making entirely in C
 
 ### World
 - `Block` and `Chunk` definitions
-
+- Chunk meshing algorithm for drawing chunk with one draw call (No naive meshing yet)
 ---
 
 ## How to build and run?
