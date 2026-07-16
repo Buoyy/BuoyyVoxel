@@ -8,7 +8,7 @@
 void texture_create(Texture *texture, const unsigned int index)
 {
     glGenTextures(1, &texture->id);
-    texture->index = GL_TEXTURE0+index;
+    texture->index = index;
 }
 
 void texture_param(unsigned int param, unsigned int value)
@@ -33,7 +33,7 @@ void texture_params(unsigned int param_count, ...)
 
 void texture_activate(const Texture *texture)
 {
-    glActiveTexture(texture->index);
+    glActiveTexture(GL_TEXTURE0 + texture->index);
     texture_bind(texture);
 }
 

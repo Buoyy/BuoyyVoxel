@@ -21,4 +21,6 @@ void texture_destroy(Texture *texture);
 void texture_create_default(Texture *texture, const unsigned int index, 
     const char *path, const int format);
 
+// TODO: Manage multiple textures' indices by themselves.
+
 #endif
