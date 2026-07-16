@@ -1,0 +1,7 @@
+# Treat headers as C
+*.h linguist-language=C
+
+# Third-party code
+ext/** linguist-vendored
+src/glad.c linguist-generated=true
+src/stb_image.c linguist-generated=true
