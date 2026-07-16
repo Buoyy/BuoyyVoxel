@@ -1,7 +1,7 @@
 #include "engine/world/chunk.h"
 
 #include "engine/render/backend/element_buffer.h"
-#include "engine/render/backend/mesh.h"
+#include "engine/render/resources/mesh.h"
 #include "engine/render/backend/primitives.h"
 #include "engine/render/backend/vertex.h"
 #include "engine/util/dyn_array.h"

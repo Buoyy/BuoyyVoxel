@@ -9,6 +9,17 @@ typedef struct BlockDefinition
     unsigned int textures[FACE_COUNT];
 } BlockDefinition;
 
+typedef enum BlockTexture
+{
+    BLOCK_TEXTURE_AIR = -1,
+    BLOCK_TEXTURE_DIRT,
+    BLOCK_TEXTURE_STONE,
+    BLOCK_TEXTURE_GRASS_SIDE,
+    BLOCK_TEXTURE_GRASS_TOP,
+    
+    BLOCK_TEXTURE_COUNT
+} BlockTexture;
+
 extern const BlockDefinition block_registry[BLOCK_TYPE_COUNT];
 
 #endif // BV_ENGINE_WORLD_BLOCK_REGISTRY_H
