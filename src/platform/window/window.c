@@ -1,8 +1,8 @@
 #include "platform/window/window.h"
 
-#include <GL/gl.h>
-#include <GLFW/glfw3.h>
 #include "engine/util/log.h"
+#include <GLFW/glfw3.h>
+#include <stb_image.h>
 
 GLFWwindow *window; // global window
 
@@ -33,6 +33,8 @@ bool window_create(int width, int height, const char *title)
         width, height, title);
 
     glEnable(GL_DEPTH_TEST);
+
+    stbi_set_flip_vertically_on_load(true);
 
     return true;
 }

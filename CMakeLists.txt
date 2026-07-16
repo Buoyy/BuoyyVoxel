@@ -46,14 +46,18 @@ set(UTIL_SOURCES
     src/engine/util/path.c
 )
 
-set(RENDER_SOURCES
+set(RENDER_BACKEND_SOURCES
     src/engine/render/backend/element_buffer.c
-    src/engine/render/backend/mesh.c
     src/engine/render/backend/primitives.c
     src/engine/render/backend/shader.c
     src/engine/render/backend/texture.c
     src/engine/render/backend/vertex_array.c
     src/engine/render/backend/vertex_buffer.c
+)
+
+set(RENDER_RESOURCES_SOURCES
+    src/engine/render/resources/mesh.c
+    src/engine/render/resources/texture_atlas.c
 )
 
 set(WORLD_SOURCES
@@ -98,7 +102,7 @@ add_executable(game
     ${THIRD_PARTY_SOURCES}
     ${CORE_SOURCES}
     ${UTIL_SOURCES}
-    ${RENDER_SOURCES}
+    ${RENDER_BACKEND_SOURCES}
     ${WORLD_SOURCES}
     ${PLATFORM_SOURCES}
 
