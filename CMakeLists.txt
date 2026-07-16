@@ -47,13 +47,13 @@ set(UTIL_SOURCES
 )
 
 set(RENDER_SOURCES
-    src/engine/render/element_buffer.c
-    src/engine/render/mesh.c
-    src/engine/render/primitives.c
-    src/engine/render/shader.c
-    src/engine/render/texture.c
-    src/engine/render/vertex_array.c
-    src/engine/render/vertex_buffer.c
+    src/engine/render/backend/element_buffer.c
+    src/engine/render/backend/mesh.c
+    src/engine/render/backend/primitives.c
+    src/engine/render/backend/shader.c
+    src/engine/render/backend/texture.c
+    src/engine/render/backend/vertex_array.c
+    src/engine/render/backend/vertex_buffer.c
 )
 
 set(WORLD_SOURCES
