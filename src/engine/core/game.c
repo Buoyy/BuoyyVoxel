@@ -2,9 +2,9 @@
 
 #include "engine/core/input.h"
 #include "engine/core/time.h"
-#include "engine/render/backend/mesh.h"
+#include "engine/render/resources/mesh.h"
 #include "engine/render/backend/shader.h"
-#include "engine/render/backend/texture.h"
+#include "engine/render/resources/texture_atlas.h"
 #include "engine/util/log.h"
 #include "engine/world/camera.h"
 #include "engine/world/chunk.h"
@@ -22,7 +22,8 @@ static Camera camera;
 static float camera_speed = 3.0f;
 
 static Shader shader;
-static Texture texture;
+
+static TextureAtlas terrain_atlas;
 static Chunk chunk;
 
 bool game_init(void)
@@ -51,8 +52,8 @@ bool game_init(void)
     shader_bind(&shader);
     shader_set_mat4(&shader, "projection", camera.projection);
 
-    texture_create_default(&texture, 0, "res/images/dirt.png", GL_RGBA);
-    shader_set_int(&shader, "tex", 0);
+    texture_atlas_create(&terrain_atlas, "res/images/atlas.png", 2, 2);
+    texture_atlas_set_sampler(&terrain_atlas, &shader, "tex");
 
     chunk_create(&chunk);
     chunk_create_mesh(&chunk);
@@ -89,7 +90,7 @@ void game_shutdown(void)
 {
     LOG_INFO("Shutting down game...");
     shader_destroy(&shader);
-    texture_destroy(&texture);
+    texture_atlas_destroy(&terrain_atlas);
     chunk_destroy(&chunk);
     window_destroy();
 }
