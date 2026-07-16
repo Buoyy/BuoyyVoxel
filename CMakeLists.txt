@@ -132,6 +132,14 @@ else()
         -Wall
         -Wextra
         -Werror
+
+        -Wshadow
+        -Wformat=2
+        -Wundef
+        -Wcast-qual
+        -Wwrite-strings
+        -Wstrict-prototypes
+        -Wmissing-prototypes
     )
 
 endif()
