@@ -1,11 +1,11 @@
 #include "tests/quad_test.h"
 
-#include "engine/render/mesh.h"
-#include "engine/render/shader.h"
-#include "engine/render/texture.h"
+#include "engine/render/backend/mesh.h"
+#include "engine/render/backend/shader.h"
+#include "engine/render/backend/texture.h"
 #include "engine/util/log.h"
 #include "engine/util/common.h"
-#include "engine/render/primitives.h"
+#include "engine/render/backend/primitives.h"
 #include "platform/opengl/gl_context.h"
 #include <glad/glad.h>
 #include <stdbool.h>

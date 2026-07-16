@@ -2,9 +2,9 @@
 
 #include "engine/core/input.h"
 #include "engine/core/time.h"
-#include "engine/render/mesh.h"
-#include "engine/render/shader.h"
-#include "engine/render/texture.h"
+#include "engine/render/backend/mesh.h"
+#include "engine/render/backend/shader.h"
+#include "engine/render/backend/texture.h"
 #include "engine/util/log.h"
 #include "engine/world/camera.h"
 #include "engine/world/chunk.h"

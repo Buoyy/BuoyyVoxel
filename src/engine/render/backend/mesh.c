@@ -1,9 +1,9 @@
-#include "engine/render/mesh.h"
+#include "engine/render/backend/mesh.h"
 
-#include "engine/render/element_buffer.h"
-#include "engine/render/vertex.h"
-#include "engine/render/vertex_array.h"
-#include "engine/render/vertex_buffer.h"
+#include "engine/render/backend/element_buffer.h"
+#include "engine/render/backend/vertex.h"
+#include "engine/render/backend/vertex_array.h"
+#include "engine/render/backend/vertex_buffer.h"
 #include "engine/util/assert.h"
 #include <glad/glad.h>
 #include <stddef.h>

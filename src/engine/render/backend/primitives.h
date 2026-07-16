@@ -1,7 +1,7 @@
-#ifndef BV_ENGINE_RENDER_PRIMITIVES_H
-#define BV_ENGINE_RENDER_PRIMITIVES_H
+#ifndef BV_ENGINE_RENDER_BACKEND_PRIMITIVES_H
+#define BV_ENGINE_RENDER_BACKEND_PRIMITIVES_H
 
-#include "engine/render/vertex.h"
+#include "engine/render/backend/vertex.h"
 
 #define FACE_VERTICES_COUNT 4
 #define FACE_INDICES_COUNT  6

@@ -7,7 +7,7 @@
 #define CHUNK_VOLUME (CHUNK_SIZE_X * CHUNK_SIZE_Y * CHUNK_SIZE_Z)
 
 #include "engine/world/block.h"
-#include "engine/render/mesh.h"
+#include "engine/render/backend/mesh.h"
 #include <stdbool.h>
 
 typedef struct Chunk

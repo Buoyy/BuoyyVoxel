@@ -1,11 +1,11 @@
 #include "tests/triangle_test.h"
 
-#include "engine/render/shader.h"
-#include "engine/render/vertex_array.h"
-#include "engine/render/vertex_buffer.h"
+#include "engine/render/backend/shader.h"
+#include "engine/render/backend/vertex_array.h"
+#include "engine/render/backend/vertex_buffer.h"
 #include "engine/util/log.h"
 #include "platform/opengl/gl_context.h"
-#include "engine/render/primitives.h"
+#include "engine/render/backend/primitives.h"
 #include <glad/glad.h>
 #include <stdbool.h>
 #include "platform/window/window.h"

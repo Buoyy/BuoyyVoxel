@@ -1,10 +1,10 @@
-#ifndef BV_ENGINE_RENDER_MESH_H
-#define BV_ENGINE_RENDER_MESH_H
+#ifndef BV_ENGINE_RENDER_BACKEND_MESH_H
+#define BV_ENGINE_RENDER_BACKEND_MESH_H
 
-#include "engine/render/element_buffer.h"
-#include "engine/render/vertex_array.h"
-#include "engine/render/vertex_buffer.h"
-#include "engine/render/vertex.h"
+#include "engine/render/backend/element_buffer.h"
+#include "engine/render/backend/vertex_array.h"
+#include "engine/render/backend/vertex_buffer.h"
+#include "engine/render/backend/vertex.h"
 
 typedef struct Mesh
 {

@@ -1,5 +1,5 @@
-#ifndef BV_ENGINE_RENDER_SHADER_H
-#define BV_ENGINE_RENDER_SHADER_H
+#ifndef BV_ENGINE_RENDER_BACKEND_SHADER_H
+#define BV_ENGINE_RENDER_BACKEND_SHADER_H
 
 #include <cglm/types.h>
 #include <stdbool.h>
