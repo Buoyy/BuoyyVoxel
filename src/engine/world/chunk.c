@@ -24,26 +24,28 @@ static inline bool chunk_in_bounds(int x, int y, int z)
         (z >= 0 && z < CHUNK_SIZE_Z);
 }
 
-static void emit_block_face(DynArray *vertices, DynArray *indices, 
-        int x, int y, int z, BlockFace face, size_t *index_offset)
+static void mesh_emit_face(DynArray *vertices, DynArray *indices,
+        int x, int y, int z,
+        FaceDirection face)
 {
-    size_t local_vertex_offset = (size_t)face * FACE_VERTICES_COUNT;
+    const FaceGeometry *geom = &block_faces[face];
+    unsigned int vertex_index_offset = (unsigned int)vertices->length;
+
     for (size_t i = 0; i < FACE_VERTICES_COUNT; ++i)
     {
-        Vertex vertex = cube_vertices[local_vertex_offset + i];
-        vertex.position[0] += x;
-        vertex.position[1] += y;
-        vertex.position[2] += z;
-        da_append(vertices, &vertex); 
+        Vertex v = geom->vertices[i];
+        v.position[0] += x;
+        v.position[1] += y;
+        v.position[2] += z;
+
+        da_append(vertices, &v);
     }
 
-    size_t local_index_offset = (size_t)face * FACE_INDICES_COUNT;
     for (size_t i = 0; i < FACE_INDICES_COUNT; ++i)
     {
-        size_t index = cube_indices[local_index_offset + i] - local_vertex_offset + *index_offset; 
-        da_append(indices, &index);
+        unsigned int face_index = quad_indices[i] + vertex_index_offset;
+        da_append(indices, &face_index);
     }
-    *index_offset += FACE_VERTICES_COUNT;
 }
 
 static bool is_air(const Chunk *chunk, int x, int y, int z)
@@ -92,9 +94,6 @@ void chunk_create_mesh(Chunk *chunk)
         return;
     }
 
-    // Used for keeping tracking of the vertex indices which are incrementing as we want a single draw call
-    size_t index_offset = 0;
-
     // Loop through the blocks to get their positions
     for (int x = 0; x < CHUNK_SIZE_X; ++x)
     {
@@ -110,21 +109,21 @@ void chunk_create_mesh(Chunk *chunk)
                 // Emit face if face is visible
                 // Front / Back faces
                 if (is_air(chunk, x, y, z + 1))
-                    emit_block_face(&vertices, &indices, x, y, z, BLOCK_FACE_FRONT, &index_offset);
+                    mesh_emit_face(&vertices, &indices, x, y, z, FACE_FRONT);
                 if (is_air(chunk, x, y, z - 1))
-                    emit_block_face(&vertices, &indices, x, y, z, BLOCK_FACE_BACK, &index_offset);
+                    mesh_emit_face(&vertices, &indices, x, y, z, FACE_BACK);
 
                 // Left / Right faces
                 if (is_air(chunk, x - 1, y, z))
-                    emit_block_face(&vertices, &indices, x, y, z, BLOCK_FACE_LEFT, &index_offset);
+                    mesh_emit_face(&vertices, &indices, x, y, z, FACE_LEFT);
                 if (is_air(chunk, x + 1, y, z))
-                    emit_block_face(&vertices, &indices, x, y, z, BLOCK_FACE_RIGHT, &index_offset);
+                    mesh_emit_face(&vertices, &indices, x, y, z, FACE_RIGHT);
 
                 // Top / bottom faces
                 if (is_air(chunk, x, y + 1, z))
-                    emit_block_face(&vertices, &indices, x, y, z, BLOCK_FACE_TOP, &index_offset);
+                    mesh_emit_face(&vertices, &indices, x, y, z, FACE_TOP);
                 if (is_air(chunk, x, y - 1, z))
-                    emit_block_face(&vertices, &indices, x, y, z, BLOCK_FACE_BOTTOM, &index_offset);
+                    mesh_emit_face(&vertices, &indices, x, y, z, FACE_BOTTOM);
             }
         }
     }
