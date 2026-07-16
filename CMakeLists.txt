@@ -76,7 +76,7 @@ set(THIRD_PARTY_SOURCES
 # Disable pedantic warnings ONLY for THIRD_PARTY_SOURCES
 if(NOT MSVC)
     set_source_files_properties(${THIRD_PARTY_SOURCES} PROPERTIES
-        COMPILE_OPTIONS "-Wno-pedantic"
+        COMPILE_OPTIONS "-Wno-pedantic;-Wno-cast-qual"
     )
 endif()
 # Uncomment while developing individual tests
