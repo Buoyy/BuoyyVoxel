@@ -1,6 +1,10 @@
 # Treat headers as C
 *.h linguist-language=C
 
+# Treat .vert and .frag files as GLSL
+*.frag linguist-language=GLSL
+*.vert linguist-language=GLSL
+
 # Third-party code
 ext/** linguist-vendored
 src/glad.c linguist-generated=true
