@@ -60,6 +60,7 @@ set(WORLD_SOURCES
     src/engine/world/camera.c
     src/engine/world/chunk.c
     src/engine/world/transform.c
+    src/engine/world/block_registry.c
 )
 
 set(PLATFORM_SOURCES

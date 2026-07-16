@@ -6,7 +6,9 @@
 #include "engine/render/vertex.h"
 #include "engine/util/dyn_array.h"
 #include "engine/util/log.h"
+#include "engine/util/common.h"
 #include "engine/world/block.h"
+#include "engine/world/block_registry.h"
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -26,10 +28,14 @@ static inline bool chunk_in_bounds(int x, int y, int z)
 
 static void mesh_emit_face(DynArray *vertices, DynArray *indices,
         int x, int y, int z,
-        FaceDirection face)
+        const Block *block, FaceDirection face)
 {
     const FaceGeometry *geom = &block_faces[face];
     unsigned int vertex_index_offset = (unsigned int)vertices->length;
+
+    const BlockDefinition *def = &block_registry[block->type];
+    unsigned int texture = def->textures[face];
+    UNUSED(texture);
 
     for (size_t i = 0; i < FACE_VERTICES_COUNT; ++i)
     {
@@ -109,21 +115,21 @@ void chunk_create_mesh(Chunk *chunk)
                 // Emit face if face is visible
                 // Front / Back faces
                 if (is_air(chunk, x, y, z + 1))
-                    mesh_emit_face(&vertices, &indices, x, y, z, FACE_FRONT);
+                    mesh_emit_face(&vertices, &indices, x, y, z, block, FACE_FRONT);
                 if (is_air(chunk, x, y, z - 1))
-                    mesh_emit_face(&vertices, &indices, x, y, z, FACE_BACK);
+                    mesh_emit_face(&vertices, &indices, x, y, z, block, FACE_BACK);
 
                 // Left / Right faces
                 if (is_air(chunk, x - 1, y, z))
-                    mesh_emit_face(&vertices, &indices, x, y, z, FACE_LEFT);
+                    mesh_emit_face(&vertices, &indices, x, y, z, block, FACE_LEFT);
                 if (is_air(chunk, x + 1, y, z))
-                    mesh_emit_face(&vertices, &indices, x, y, z, FACE_RIGHT);
+                    mesh_emit_face(&vertices, &indices, x, y, z, block, FACE_RIGHT);
 
                 // Top / bottom faces
                 if (is_air(chunk, x, y + 1, z))
-                    mesh_emit_face(&vertices, &indices, x, y, z, FACE_TOP);
+                    mesh_emit_face(&vertices, &indices, x, y, z, block, FACE_TOP);
                 if (is_air(chunk, x, y - 1, z))
-                    mesh_emit_face(&vertices, &indices, x, y, z, FACE_BOTTOM);
+                    mesh_emit_face(&vertices, &indices, x, y, z, block, FACE_BOTTOM);
             }
         }
     }
