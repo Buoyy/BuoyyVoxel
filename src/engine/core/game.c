@@ -16,14 +16,14 @@
 #define SCR_WIDTH 1280
 #define SCR_HEIGHT 720
 
+static void camera_handle_input(Camera *cam);
+
 static Camera camera;
 static float camera_speed = 3.0f;
 
 static Shader shader;
 static Texture texture;
 static Chunk chunk;
-
-static void camera_handle_input(Camera *camera);
 
 bool game_init(void)
 {
@@ -94,20 +94,20 @@ void game_shutdown(void)
     window_destroy();
 }
 
-static void camera_handle_input(Camera *camera)
+static void camera_handle_input(Camera *cam)
 {
-    camera_rotate(camera, 
+    camera_rotate(cam,
             mouse_sens*input_mouse_dy(), mouse_sens*input_mouse_dx());
     if (input_key_down(GLFW_KEY_W))
-        camera_move(camera, CAMERA_FRONT, camera_speed*delta_time);
+        camera_move(cam, CAMERA_FRONT, camera_speed*delta_time);
     if (input_key_down(GLFW_KEY_S))
-        camera_move(camera, CAMERA_FRONT, -camera_speed*delta_time);
+        camera_move(cam, CAMERA_FRONT, -camera_speed*delta_time);
     if (input_key_down(GLFW_KEY_D))
-        camera_move(camera, CAMERA_RIGHT, camera_speed*delta_time);
+        camera_move(cam, CAMERA_RIGHT, camera_speed*delta_time);
     if (input_key_down(GLFW_KEY_A))
-        camera_move(camera, CAMERA_RIGHT, -camera_speed*delta_time);
+        camera_move(cam, CAMERA_RIGHT, -camera_speed*delta_time);
     if (input_key_down(GLFW_KEY_SPACE))
-        camera_move(camera, CAMERA_WORLD_UP, camera_speed*delta_time);
+        camera_move(cam, CAMERA_WORLD_UP, camera_speed*delta_time);
     if (input_key_down(GLFW_KEY_LEFT_SHIFT))
-        camera_move(camera, CAMERA_WORLD_UP, -camera_speed*delta_time);
+        camera_move(cam, CAMERA_WORLD_UP, -camera_speed*delta_time);
 }

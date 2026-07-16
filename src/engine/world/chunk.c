@@ -1,14 +1,15 @@
 #include "engine/world/chunk.h"
 
+#include "engine/render/element_buffer.h"
 #include "engine/render/mesh.h"
 #include "engine/render/primitives.h"
 #include "engine/render/vertex.h"
-#include "engine/util/common.h"
 #include "engine/util/dyn_array.h"
 #include "engine/util/log.h"
 #include "engine/world/block.h"
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdio.h>
 #include <string.h>
 
 static inline size_t chunk_index(int x, int y, int z)
@@ -23,19 +24,51 @@ static inline bool chunk_in_bounds(int x, int y, int z)
         (z >= 0 && z < CHUNK_SIZE_Z);
 }
 
+static void emit_block_face(DynArray *vertices, DynArray *indices, 
+        int x, int y, int z, BlockFace face, size_t *index_offset)
+{
+    size_t local_vertex_offset = (size_t)face * FACE_VERTICES_COUNT;
+    for (size_t i = 0; i < FACE_VERTICES_COUNT; ++i)
+    {
+        Vertex vertex = cube_vertices[local_vertex_offset + i];
+        vertex.position[0] += x;
+        vertex.position[1] += y;
+        vertex.position[2] += z;
+        da_append(vertices, &vertex); 
+    }
+
+    size_t local_index_offset = (size_t)face * FACE_INDICES_COUNT;
+    for (size_t i = 0; i < FACE_INDICES_COUNT; ++i)
+    {
+        size_t index = cube_indices[local_index_offset + i] - local_vertex_offset + *index_offset; 
+        da_append(indices, &index);
+    }
+    *index_offset += FACE_VERTICES_COUNT;
+}
+
+static bool is_air(const Chunk *chunk, int x, int y, int z)
+{
+    if (!chunk_in_bounds(x,y,z))
+        return true;
+
+    const Block *b = &chunk->blocks[chunk_index(x,y,z)];
+
+    return b->type == BLOCK_AIR;
+}
+
 bool chunk_create(Chunk *chunk)
 {
-    // Temporarily, the chunk is just a shell of dirt.
+    // Temporarily, the chunk is full of dirt.
     Block dirt = { .type = BLOCK_DIRT };
     for (int x = 0; x < CHUNK_SIZE_X; ++x) 
     {
         for (int y = 0; y < CHUNK_SIZE_Y; ++y)
-        {
-            for (int z = 0; z < CHUNK_SIZE_Z; ++z)
-            {
-                if ((x > 0 && x < CHUNK_SIZE_X - 1)
-                    && (y > 0 && y < CHUNK_SIZE_Y - 1)
-                    && (z > 0 && z < CHUNK_SIZE_Z - 1)) continue;
+        { 
+            for (int z = 0; z < CHUNK_SIZE_Z; ++z) 
+            { 
+                // if ((x > 0 && x < CHUNK_SIZE_X - 1) &&
+                // (y > 0 && y < CHUNK_SIZE_Y - 1) &&
+                // (z > 0 && z < CHUNK_SIZE_Z - 1)) continue;
                 chunk_set(chunk, x, y, z, dirt);
             }
         }
@@ -60,7 +93,7 @@ void chunk_create_mesh(Chunk *chunk)
     }
 
     // Used for keeping tracking of the vertex indices which are incrementing as we want a single draw call
-    unsigned int index_offset = 0;
+    size_t index_offset = 0;
 
     // Loop through the blocks to get their positions
     for (int x = 0; x < CHUNK_SIZE_X; ++x)
@@ -69,36 +102,29 @@ void chunk_create_mesh(Chunk *chunk)
         {
             for (int z = 0; z < CHUNK_SIZE_Z; ++z)
             {
-                // Skip air blocks
-                Block *block = &chunk->blocks[chunk_index(x, y, z)];
-                if (block == NULL)
-                {
-                    LOG_ERROR("Null block found! Exiting mesh generation...");
-                    da_deinit(&vertices);
-                    da_deinit(&indices);
-                    return;
-                };
+                 // Skip air blocks
+                size_t index = chunk_index(x, y, z);
+                Block *block = &chunk->blocks[index];
                 if (block->type == BLOCK_AIR) continue;
 
-                // Add the vertex to the dyn_array, offset them by their world positions
-                for (size_t i = 0; i < ARR_LEN(cube_vertices); ++i)
-                {
-                    Vertex v = cube_vertices[i];
-                    v.position[0] += x;
-                    v.position[1] += y;
-                    v.position[2] += z;
+                // Emit face if face is visible
+                // Front / Back faces
+                if (is_air(chunk, x, y, z + 1))
+                    emit_block_face(&vertices, &indices, x, y, z, BLOCK_FACE_FRONT, &index_offset);
+                if (is_air(chunk, x, y, z - 1))
+                    emit_block_face(&vertices, &indices, x, y, z, BLOCK_FACE_BACK, &index_offset);
 
-                    da_append(&vertices, &v);
-                }
+                // Left / Right faces
+                if (is_air(chunk, x - 1, y, z))
+                    emit_block_face(&vertices, &indices, x, y, z, BLOCK_FACE_LEFT, &index_offset);
+                if (is_air(chunk, x + 1, y, z))
+                    emit_block_face(&vertices, &indices, x, y, z, BLOCK_FACE_RIGHT, &index_offset);
 
-                // Add the index to the dyn_array, offset them by their world positions
-                for (size_t i = 0; i < ARR_LEN(cube_indices); ++i) 
-                {
-                    unsigned int index = index_offset + cube_indices[i];
-                    da_append(&indices, &index);
-                }
-                // Make sure that the offset also increases for the next loop iteration
-                index_offset += ARR_LEN(cube_vertices);
+                // Top / bottom faces
+                if (is_air(chunk, x, y + 1, z))
+                    emit_block_face(&vertices, &indices, x, y, z, BLOCK_FACE_TOP, &index_offset);
+                if (is_air(chunk, x, y - 1, z))
+                    emit_block_face(&vertices, &indices, x, y, z, BLOCK_FACE_BOTTOM, &index_offset);
             }
         }
     }
@@ -134,7 +160,6 @@ void chunk_set(Chunk *chunk, int x, int y, int z, Block block)
 }
 
 void chunk_destroy(Chunk *chunk)
-{
-    memset(chunk->blocks, 0, sizeof(chunk->blocks));
+{    
     mesh_destroy(&chunk->mesh);
 }
