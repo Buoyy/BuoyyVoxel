@@ -23,7 +23,7 @@ Welcome to **BuoyyVoxel**. This is a voxel game engine I am making entirely in C
 
 ### World
 - `Block` and `Chunk` definitions
-- Chunk meshing algorithm for drawing chunk with one draw call (No naive meshing yet)
+- Naive meshing algorithm for creating mesh for chunks
 ---
 
 ## How to build and run?
