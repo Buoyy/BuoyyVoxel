@@ -2,7 +2,6 @@
 
 #include "engine/util/log.h"
 #include "engine/util/path.h"
-#include <stdlib.h>
 
 const char *gl_error_string(GLenum error)
 {

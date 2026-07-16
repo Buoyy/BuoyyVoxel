@@ -131,7 +131,6 @@ else()
     target_compile_options(game PRIVATE
         -Wall
         -Wextra
-        -Wpedantic
         -Werror
     )
 

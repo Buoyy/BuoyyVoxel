@@ -4,11 +4,10 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-typedef struct ElementBuffer ElementBuffer;
-struct ElementBuffer
+typedef struct ElementBuffer
 {
 	unsigned int id;
-};
+} ElementBuffer;
 
 void element_buffer_create(ElementBuffer *eb);
 void element_buffer_bind(const ElementBuffer *eb);

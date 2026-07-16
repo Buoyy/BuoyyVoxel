@@ -5,7 +5,6 @@
 #include "platform/opengl/gl_debug.h"
 #include <glad/glad.h>
 #include <stdbool.h>
-#include <stdlib.h>
 
 #define INFO_LOG_SIZE 512
 

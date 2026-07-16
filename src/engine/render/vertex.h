@@ -3,11 +3,10 @@
 
 #include <cglm/types.h>
 
-typedef struct Vertex Vertex;
-struct Vertex
+typedef struct Vertex
 {
     vec3 position;
     vec2 uv;
-};
+} Vertex;
 
 #endif

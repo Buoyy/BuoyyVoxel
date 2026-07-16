@@ -3,15 +3,14 @@
 
 #include <cglm/types.h>
 
-typedef struct Transform Transform;
-struct Transform
+typedef struct Transform
 {
     vec3 position;
     vec3 rotation; // Store as degrees
     vec3 scale;
 
     mat4 model;
-};
+} Transform;
 
 void transform_create(Transform *transform);
 void transform_update(Transform *transform);

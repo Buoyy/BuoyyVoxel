@@ -4,11 +4,10 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-typedef struct VertexBuffer VertexBuffer;
-struct VertexBuffer
+typedef struct VertexBuffer
 {
 	unsigned int id;
-};
+} VertexBuffer;
 
 void vertex_buffer_create(VertexBuffer *vb);
 void vertex_buffer_bind(const VertexBuffer *vb);

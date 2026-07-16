@@ -1,6 +1,6 @@
 #include "engine/core/game.h"
 
-int main()
+int main(void)
 {
     if (!game_init())
         return 1;

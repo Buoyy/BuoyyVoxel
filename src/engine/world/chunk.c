@@ -105,6 +105,8 @@ void chunk_create_mesh(Chunk *chunk)
 
     // Send the acquired vertex and index data to the mesh
     mesh_create(&chunk->mesh, vertices.data, vertices.length, indices.data, indices.length);
+    LOG_INFO("Vertices: %zu", vertices.length);
+    LOG_INFO("Indices:  %zu", indices.length);
     da_deinit(&vertices);
     da_deinit(&indices);
 }

@@ -4,14 +4,13 @@
 #include <stddef.h>
 #include <stdbool.h>
 
-typedef struct DynArray DynArray;
-struct DynArray
+typedef struct DynArray
 {
     void *data;
     size_t element_size;
     size_t length;
     size_t capacity;
-};
+} DynArray;
 
 // Initialise a dynamic array of given element size. Returns true on successful initalization.
 // Returns false otherwise.

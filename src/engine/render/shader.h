@@ -4,11 +4,10 @@
 #include <cglm/types.h>
 #include <stdbool.h>
 
-typedef struct Shader Shader;
-struct Shader
+typedef struct Shader
 {
     unsigned int id;  
-};
+} Shader;
 
 bool shader_create(Shader *shader, const char *vert_src, const char *frag_src);
 bool shader_create_from_file(Shader *shader, const char *vert_path, const char *frag_path);

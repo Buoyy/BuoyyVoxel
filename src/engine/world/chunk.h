@@ -10,12 +10,11 @@
 #include "engine/render/mesh.h"
 #include <stdbool.h>
 
-typedef struct Chunk Chunk;
-struct Chunk
+typedef struct Chunk
 {
     Block blocks[CHUNK_VOLUME];
     Mesh mesh;
-};
+} Chunk;
 
 bool chunk_create(Chunk *chunk);
 

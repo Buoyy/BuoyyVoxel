@@ -5,8 +5,7 @@
 
 // Remember, +x axis -> right, +y -> up, +z -> out of the screen
 
-typedef struct Camera Camera;
-struct Camera
+typedef struct Camera
 {
     float fov, yaw, pitch;
 
@@ -14,15 +13,14 @@ struct Camera
     vec3 front, right, up;
 
     mat4 projection, view;
-};
+} Camera;
 
-typedef enum CameraMovement CameraMovement;
-enum CameraMovement
+typedef enum CameraMovement
 {
     CAMERA_FRONT,
     CAMERA_RIGHT,
     CAMERA_WORLD_UP
-};
+} CameraMovement;
 
 void camera_create(Camera *camera, float width, float height);
 void camera_update(Camera *camera);

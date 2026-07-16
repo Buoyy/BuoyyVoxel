@@ -6,15 +6,14 @@
 #include "engine/render/vertex_buffer.h"
 #include "engine/render/vertex.h"
 
-typedef struct Mesh Mesh;
-struct Mesh
+typedef struct Mesh
 {
     VertexArray va;
     VertexBuffer vb;
     ElementBuffer eb;
 
     unsigned int element_count;
-};
+} Mesh;
 
 void mesh_create(Mesh *mesh, 
     const Vertex *vertices,          size_t vertices_count,

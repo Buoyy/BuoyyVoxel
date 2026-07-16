@@ -3,12 +3,11 @@
 
 #include <stdbool.h>
 
-typedef struct Texture Texture;
-struct Texture
+typedef struct Texture
 {
     unsigned int id;
     unsigned int index;
-};
+} Texture;
 
 void texture_create(Texture *texture, const unsigned int index);
 void texture_param(unsigned int param, unsigned int value);
