@@ -5,18 +5,20 @@
 #include <stb_image.h>
 #include <stdarg.h>
 
-void texture_create(Texture *texture, const unsigned int index)
+static unsigned int next_texture_index = 0;
+
+void texture_create(Texture *texture)
 {
     glGenTextures(1, &texture->id);
-    texture->index = index;
+    texture->index = next_texture_index++;
 }
 
-void texture_param(unsigned int param, unsigned int value)
+void texture_set_param(unsigned int param, unsigned int value)
 {
     glTexParameteri(GL_TEXTURE_2D, param, value);
 }
 
-void texture_params(unsigned int param_count, ...)
+void texture_set_params(unsigned int param_count, ...)
 {
     va_list args;
     va_start(args, param_count);
@@ -25,20 +27,15 @@ void texture_params(unsigned int param_count, ...)
     {
         unsigned int param = va_arg(args, unsigned int);
         unsigned int value = va_arg(args, unsigned int);
-        texture_param(param, value);
+        texture_set_param(param, value);
     }
 
     va_end(args);
 }
 
-void texture_activate(const Texture *texture)
-{
-    glActiveTexture(GL_TEXTURE0 + texture->index);
-    texture_bind(texture);
-}
-
 void texture_bind(const Texture *texture)
 {
+    glActiveTexture(GL_TEXTURE0 + texture->index);
     glBindTexture(GL_TEXTURE_2D, texture->id);  
 }
 
@@ -64,14 +61,15 @@ void texture_unbind(void)
 void texture_destroy(Texture *texture)
 {
     glDeleteTextures(1, &texture->id);
+    texture->id = 0;
+    texture->index = 0;
 }
 
-void texture_create_default(Texture *texture, const unsigned int index, 
-    const char *path, const int format)
+void texture_create_default(Texture *texture, const char *path, const int format)
 {
-    texture_create(texture, index);
-    texture_activate(texture);
-    texture_params(4, 
+    texture_create(texture);
+    texture_bind(texture);
+    texture_set_params(4, 
             GL_TEXTURE_WRAP_S, GL_REPEAT,
             GL_TEXTURE_WRAP_T, GL_REPEAT,
             GL_TEXTURE_MIN_FILTER, GL_NEAREST,
