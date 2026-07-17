@@ -7,13 +7,17 @@ Welcome to **BuoyyVoxel**. This is a voxel game engine I am making entirely in C
 - Assertions (self-explanatory)
 - Visible debugging for OpenGL
 
-### Rendering
+### Rendering (Backend)
 - A simple window opens up and shows a chunk (a shell of dirt)
 - OpenGL debug messages with `ARB_debug_output` OpenGL extension
 - Shader abstraction with external file support
 - Vertex buffer, element buffer and vertex array abstraction
-- Mesh abstraction with above
 - Texture abstraction
+
+### Rendering (Resources)
+- Mesh abstraction with backend
+- Texture atlas (as of now, only a simple terrain atlas)
+- Usage of quads as primitives for drawing block faces
 
 ### Engine
 - Time and Input module
@@ -29,6 +33,8 @@ Welcome to **BuoyyVoxel**. This is a voxel game engine I am making entirely in C
 ## How to build and run?
 - Clone the repository recursively by using this command:
 - `git clone --recursive https://github.com/Buoyy/BuoyyVoxel.git`
+- In case you cloned normally, use this command:
+- `git submodule update --init --recursive`
 - On Windows, use `build_msvc.bat` if using Visual Studio as a compiler, else use `build_!msvc.bat`. 
 - On Linux/Mac, use `build.sh`. 
 - Should work on GCC and Clang for sure.
