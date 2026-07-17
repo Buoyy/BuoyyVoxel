@@ -4,9 +4,9 @@
 #include "engine/render/resources/mesh.h"
 #include "engine/render/backend/primitives.h"
 #include "engine/render/backend/vertex.h"
+#include "engine/render/resources/texture_atlas.h"
 #include "engine/util/dyn_array.h"
 #include "engine/util/log.h"
-#include "engine/util/common.h"
 #include "engine/world/block.h"
 #include "engine/world/block_registry.h"
 #include <stdbool.h>
@@ -26,16 +26,27 @@ static inline bool chunk_in_bounds(int x, int y, int z)
         (z >= 0 && z < CHUNK_SIZE_Z);
 }
 
+static void vertex_adjust_uv(Vertex *vertex, BlockTexture texture, TextureAtlas *atlas)
+{
+    unsigned int texture_x = texture % atlas->cols;
+    unsigned int texture_y = (atlas->rows - 1) - (texture / atlas->cols);
+
+    float texture_width  = 1.0f / atlas->cols;
+    float texture_height = 1.0f / atlas->rows;
+
+    vertex->uv[0] = (vertex->uv[0] + texture_x) * texture_width;
+    vertex->uv[1] = (vertex->uv[1] + texture_y) * texture_height;
+}
+
 static void mesh_emit_face(DynArray *vertices, DynArray *indices,
         int x, int y, int z,
-        const Block *block, FaceDirection face)
+        const Block *block, FaceDirection face, TextureAtlas *atlas)
 {
     const FaceGeometry *geom = &block_faces[face];
     unsigned int vertex_index_offset = (unsigned int)vertices->length;
 
     const BlockDefinition *def = &block_registry[block->type];
-    unsigned int texture = def->textures[face];
-    UNUSED(texture);
+    BlockTexture texture = def->textures[face];
 
     for (size_t i = 0; i < FACE_VERTICES_COUNT; ++i)
     {
@@ -43,6 +54,8 @@ static void mesh_emit_face(DynArray *vertices, DynArray *indices,
         v.position[0] += x;
         v.position[1] += y;
         v.position[2] += z;
+
+        vertex_adjust_uv(&v, texture, atlas);
 
         da_append(vertices, &v);
     }
@@ -67,7 +80,7 @@ static bool is_air(const Chunk *chunk, int x, int y, int z)
 bool chunk_create(Chunk *chunk)
 {
     // Temporarily, the chunk is full of dirt.
-    Block dirt = { .type = BLOCK_DIRT };
+    Block grass = { .type = BLOCK_GRASS };
     for (int x = 0; x < CHUNK_SIZE_X; ++x) 
     {
         for (int y = 0; y < CHUNK_SIZE_Y; ++y)
@@ -77,14 +90,14 @@ bool chunk_create(Chunk *chunk)
                 // if ((x > 0 && x < CHUNK_SIZE_X - 1) &&
                 // (y > 0 && y < CHUNK_SIZE_Y - 1) &&
                 // (z > 0 && z < CHUNK_SIZE_Z - 1)) continue;
-                chunk_set(chunk, x, y, z, dirt);
+                chunk_set(chunk, x, y, z, grass);
             }
         }
     }
     return true;
 }
 
-void chunk_create_mesh(Chunk *chunk)
+void chunk_build_mesh(Chunk *chunk, TextureAtlas *atlas)
 {
     // Create dynamic arrays for vertices and indices
     DynArray vertices, indices;
@@ -115,21 +128,21 @@ void chunk_create_mesh(Chunk *chunk)
                 // Emit face if face is visible
                 // Front / Back faces
                 if (is_air(chunk, x, y, z + 1))
-                    mesh_emit_face(&vertices, &indices, x, y, z, block, FACE_FRONT);
+                    mesh_emit_face(&vertices, &indices, x, y, z, block, FACE_FRONT, atlas);
                 if (is_air(chunk, x, y, z - 1))
-                    mesh_emit_face(&vertices, &indices, x, y, z, block, FACE_BACK);
+                    mesh_emit_face(&vertices, &indices, x, y, z, block, FACE_BACK, atlas);
 
                 // Left / Right faces
                 if (is_air(chunk, x - 1, y, z))
-                    mesh_emit_face(&vertices, &indices, x, y, z, block, FACE_LEFT);
+                    mesh_emit_face(&vertices, &indices, x, y, z, block, FACE_LEFT, atlas);
                 if (is_air(chunk, x + 1, y, z))
-                    mesh_emit_face(&vertices, &indices, x, y, z, block, FACE_RIGHT);
+                    mesh_emit_face(&vertices, &indices, x, y, z, block, FACE_RIGHT, atlas);
 
                 // Top / bottom faces
                 if (is_air(chunk, x, y + 1, z))
-                    mesh_emit_face(&vertices, &indices, x, y, z, block, FACE_TOP);
+                    mesh_emit_face(&vertices, &indices, x, y, z, block, FACE_TOP, atlas);
                 if (is_air(chunk, x, y - 1, z))
-                    mesh_emit_face(&vertices, &indices, x, y, z, block, FACE_BOTTOM);
+                    mesh_emit_face(&vertices, &indices, x, y, z, block, FACE_BOTTOM, atlas);
             }
         }
     }

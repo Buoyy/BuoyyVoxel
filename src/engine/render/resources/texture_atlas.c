@@ -5,7 +5,7 @@
 
 void texture_atlas_create(TextureAtlas *atlas, const char *filepath, unsigned int rows, unsigned int cols)
 {
-    texture_create_default(&atlas->texture, 0, filepath, GL_RGBA); // Assuming no other textures have been loaded yet
+    texture_create_default(&atlas->texture, filepath, GL_RGBA);
     atlas->rows = rows;
     atlas->cols = cols;
 }

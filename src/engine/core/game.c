@@ -56,7 +56,7 @@ bool game_init(void)
     texture_atlas_set_sampler(&terrain_atlas, &shader, "tex");
 
     chunk_create(&chunk);
-    chunk_create_mesh(&chunk);
+    chunk_build_mesh(&chunk, &terrain_atlas);
 
     return true;
 }

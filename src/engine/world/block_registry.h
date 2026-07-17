@@ -11,12 +11,13 @@ typedef struct BlockDefinition
 
 typedef enum BlockTexture
 {
-    BLOCK_TEXTURE_AIR = -1,
     BLOCK_TEXTURE_DIRT,
     BLOCK_TEXTURE_STONE,
     BLOCK_TEXTURE_GRASS_SIDE,
     BLOCK_TEXTURE_GRASS_TOP,
-    
+
+    BLOCK_TEXTURE_AIR,
+
     BLOCK_TEXTURE_COUNT
 } BlockTexture;
 

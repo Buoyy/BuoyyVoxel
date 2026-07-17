@@ -3,10 +3,10 @@
 
 typedef enum BlockType
 {
-    BLOCK_AIR,
     BLOCK_DIRT,
-    BLOCK_GRASS,
     BLOCK_STONE,
+    BLOCK_GRASS,
+    BLOCK_AIR,
 
     BLOCK_TYPE_COUNT
 } BlockType;
