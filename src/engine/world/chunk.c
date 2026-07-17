@@ -12,7 +12,8 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
-#include <string.h>
+#include <stdlib.h>
+#include <time.h>
 
 static inline size_t chunk_index(int x, int y, int z)
 {
@@ -79,18 +80,31 @@ static bool is_air(const Chunk *chunk, int x, int y, int z)
 
 bool chunk_create(Chunk *chunk)
 {
-    // Temporarily, the chunk is full of dirt.
+    Block dirt  = { .type = BLOCK_DIRT  };
     Block grass = { .type = BLOCK_GRASS };
+    Block stone = { .type = BLOCK_STONE };
+    Block air   = { .type = BLOCK_AIR   };
+
+    srand(time(NULL));
+
     for (int x = 0; x < CHUNK_SIZE_X; ++x) 
     {
         for (int y = 0; y < CHUNK_SIZE_Y; ++y)
         { 
             for (int z = 0; z < CHUNK_SIZE_Z; ++z) 
-            { 
-                // if ((x > 0 && x < CHUNK_SIZE_X - 1) &&
-                // (y > 0 && y < CHUNK_SIZE_Y - 1) &&
-                // (z > 0 && z < CHUNK_SIZE_Z - 1)) continue;
-                chunk_set(chunk, x, y, z, grass);
+            {
+                int grass_height =
+                    (rand() % 4 +
+                     rand() % 4 +
+                     rand() % 4) / 3 + 6;
+                if (y < 3)
+                    chunk_set(chunk, x, y, z, stone);
+                else if (y < 7)
+                    chunk_set(chunk, x, y, z, dirt);
+                else if (y < grass_height)
+                    chunk_set(chunk, x, y, z, grass);
+                else
+                    chunk_set(chunk, x, y, z, air);
             }
         }
     }
