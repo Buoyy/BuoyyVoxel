@@ -49,3 +49,4 @@ const BlockDefinition block_registry[] =
         }
     },
 };
+

@@ -1,6 +1,5 @@
 #include "engine/render/backend/vertex_array.h"
 
-
 #include <glad/glad.h>
 
 void vertex_array_create(VertexArray *va)

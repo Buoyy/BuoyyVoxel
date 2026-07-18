@@ -3,12 +3,12 @@
 #include "engine/util/log.h"
 #include <cglm/cglm.h>
 
-void camera_create(Camera *camera, float width, float height)
+void camera_init(Camera *camera, float width, float height)
 {
     glm_vec3_copy((vec3){0, 0, 3}, camera->position);
     glm_vec3_copy((vec3){0, 0, -1},camera->front);
 
-    camera->fov = 60.0f;
+    camera->fov = 90.0f;
     camera->yaw = -90.0f; // Could take to be 0 too if the angle was with -z axis.
     camera->pitch = 0.0f;
     camera_update(camera);
@@ -44,12 +44,12 @@ void camera_update(Camera *camera)
     glm_lookat(camera->position, target, camera->up, camera->view);
 }
 
-void camera_rotate(Camera *camera, float dx, float dy)
+void camera_rotate(Camera *camera, float pitch_delta, float yaw_delta)
 {
-    camera->pitch += dx;
-    camera->yaw   += dy;
+    camera->pitch += pitch_delta;
+    camera->yaw   += yaw_delta;
 
-    camera->pitch = glm_clamp(camera->pitch, -88.0f, 88.0f);
+    camera->pitch = glm_clamp(camera->pitch, -85.0f, 85.0f);
 }
 
 void camera_move(Camera *camera, CameraMovement direction, float amount)
@@ -71,3 +71,4 @@ void camera_move(Camera *camera, CameraMovement direction, float amount)
     }
     glm_vec3_add(camera->position, displacement, camera->position);
 }
+
