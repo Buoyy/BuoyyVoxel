@@ -16,10 +16,10 @@
 #define SCR_WIDTH 1280
 #define SCR_HEIGHT 720
 
-static void camera_handle_input(Camera *cam);
+static void camera_handle_input(void);
 
 static Camera camera;
-static float camera_speed = 3.0f;
+static float camera_speed = 4.5f;
 
 static Shader shader;
 
@@ -31,23 +31,20 @@ bool game_init(void)
     LOG_INFO("Initializing game...");
 
     if (!window_create(SCR_WIDTH, SCR_HEIGHT, "BuoyyVoxel"))
-        return false;
+        goto fail;
 
     if (!gl_context_init())
-    {
-        window_destroy();
-        return false;
-    }
+        goto fail;
 
     input_init();
 
-    camera_create(&camera, SCR_WIDTH, SCR_HEIGHT);
+    camera_init(&camera, SCR_WIDTH, SCR_HEIGHT);
 
     if (!shader_create_from_file(&shader, 
         "res/shaders/textured_cube.vert", "res/shaders/textured_cube.frag"))
     {
         LOG_ERROR("Couldn't create shader 'simple'");
-        return 1;
+        goto fail;
     }
     shader_bind(&shader);
     shader_set_mat4(&shader, "projection", camera.projection);
@@ -59,6 +56,10 @@ bool game_init(void)
     chunk_build_mesh(&chunk, &terrain_atlas);
 
     return true;
+
+fail:
+    game_shutdown();
+    return false;
 }
 
 bool game_running(void)
@@ -73,8 +74,11 @@ void game_update(void)
     time_update();
 
     if (input_key_down(GLFW_KEY_ESCAPE))
+    {
         glfwSetWindowShouldClose(window, true);
-    camera_handle_input(&camera);
+    }
+    
+    camera_handle_input();
     camera_update(&camera);
 }
 
@@ -95,20 +99,21 @@ void game_shutdown(void)
     window_destroy();
 }
 
-static void camera_handle_input(Camera *cam)
+static void camera_handle_input(void)
 {
-    camera_rotate(cam,
+    camera_rotate(&camera,
             mouse_sens*input_mouse_dy(), mouse_sens*input_mouse_dx());
     if (input_key_down(GLFW_KEY_W))
-        camera_move(cam, CAMERA_FRONT, camera_speed*delta_time);
+        camera_move(&camera, CAMERA_FRONT, camera_speed*delta_time);
     if (input_key_down(GLFW_KEY_S))
-        camera_move(cam, CAMERA_FRONT, -camera_speed*delta_time);
+        camera_move(&camera, CAMERA_FRONT, -camera_speed*delta_time);
     if (input_key_down(GLFW_KEY_D))
-        camera_move(cam, CAMERA_RIGHT, camera_speed*delta_time);
+        camera_move(&camera, CAMERA_RIGHT, camera_speed*delta_time);
     if (input_key_down(GLFW_KEY_A))
-        camera_move(cam, CAMERA_RIGHT, -camera_speed*delta_time);
+        camera_move(&camera, CAMERA_RIGHT, -camera_speed*delta_time);
     if (input_key_down(GLFW_KEY_SPACE))
-        camera_move(cam, CAMERA_WORLD_UP, camera_speed*delta_time);
+        camera_move(&camera, CAMERA_WORLD_UP, camera_speed*delta_time);
     if (input_key_down(GLFW_KEY_LEFT_SHIFT))
-        camera_move(cam, CAMERA_WORLD_UP, -camera_speed*delta_time);
+        camera_move(&camera, CAMERA_WORLD_UP, -camera_speed*delta_time);
 }
+

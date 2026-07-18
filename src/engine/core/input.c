@@ -46,3 +46,4 @@ float input_mouse_dy(void)
 {
     return mouse_inverted ? (mouse_y-last_mouse_y) : (last_mouse_y-mouse_y);
 }
+

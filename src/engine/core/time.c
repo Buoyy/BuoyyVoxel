@@ -18,3 +18,4 @@ void time_update(void)
 
     last_time = current_time;
 }
+
