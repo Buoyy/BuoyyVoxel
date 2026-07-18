@@ -8,6 +8,9 @@ void texture_atlas_create(TextureAtlas *atlas, const char *filepath, unsigned in
     texture_create_default(&atlas->texture, filepath, GL_RGBA);
     atlas->rows = rows;
     atlas->cols = cols;
+
+    atlas->tile_width = 1.0f / cols;
+    atlas->tile_height = 1.0f / rows;
 }
 
 void texture_atlas_bind(const TextureAtlas *atlas)
@@ -22,7 +25,7 @@ void texture_atlas_unbind(void)
 
 void texture_atlas_set_sampler(const TextureAtlas *atlas, const Shader *shader, const char *sampler_identifier)
 {
-    shader_set_int(shader, sampler_identifier, atlas->texture.index);
+    shader_set_sampler(shader, sampler_identifier, &atlas->texture);
 }
 
 void texture_atlas_destroy(TextureAtlas *atlas)
@@ -31,3 +34,4 @@ void texture_atlas_destroy(TextureAtlas *atlas)
     atlas->rows = 0;
     atlas->cols = 0;
 }
+

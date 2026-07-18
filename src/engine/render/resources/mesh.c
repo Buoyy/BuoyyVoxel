@@ -45,3 +45,4 @@ void mesh_destroy(Mesh *mesh)
     vertex_array_destroy(&mesh->va);
     mesh->element_count = 0;
 }
+
