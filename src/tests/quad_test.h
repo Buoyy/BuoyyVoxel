@@ -3,4 +3,5 @@
 
 int quad_test_run(void);
 
-#endif
+#endif // BV_TESTS_QUAD_TEST_H
+

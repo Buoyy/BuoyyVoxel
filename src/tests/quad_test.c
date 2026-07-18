@@ -1,6 +1,6 @@
 #include "tests/quad_test.h"
 
-#include "engine/render/backend/mesh.h"
+#include "engine/render/resources/mesh.h"
 #include "engine/render/backend/shader.h"
 #include "engine/render/backend/texture.h"
 #include "engine/util/log.h"
@@ -35,7 +35,7 @@ int quad_test_run(void)
 
     stbi_set_flip_vertically_on_load(true);
     Texture dirt;
-    texture_create_default(&dirt, 0, "res/images/dirt.png", GL_RGBA);
+    texture_create_default(&dirt, "res/images/dirt.png", GL_RGBA);
     shader_set_int(&shader, "tex", 0);
 
     Mesh quad;
@@ -55,3 +55,4 @@ int quad_test_run(void)
     window_destroy();
     return 0;
 }
+

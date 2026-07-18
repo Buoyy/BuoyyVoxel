@@ -55,3 +55,4 @@ int triangle_test_run(void)
     window_destroy();
     return 0;
 }
+

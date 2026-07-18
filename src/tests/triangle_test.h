@@ -3,4 +3,5 @@
 
 int triangle_test_run(void);
 
-#endif 
+#endif // BV_TESTS_TRIANGLE_TEST_H
+
