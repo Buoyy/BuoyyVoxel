@@ -4,9 +4,18 @@
 #include <glad/glad.h>
 #include <stdbool.h>
 
-const char *gl_error_string(GLenum error);
-void        gl_check_error(const char *file, int line);
+/**
+ * Logs all errors accumulated in the GL context.
+ *
+ * @p file The source code file where the error occured
+ * @p line The line in the source code where the error occured
+ */
+void gl_check_error(const char *file, int line);
 
+/**
+ * Sets up the GL_ARB_debug_output extension.
+ * Returns true if successful and false otherwise.
+ */
 bool gl_debug_init(void);
 
 #ifndef NDEBUG

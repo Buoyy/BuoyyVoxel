@@ -3,7 +3,7 @@
 #include "engine/util/log.h"
 #include "engine/util/path.h"
 
-const char *gl_error_string(GLenum error)
+static const char *gl_error_string(GLenum error)
 {
     switch (error)
     {

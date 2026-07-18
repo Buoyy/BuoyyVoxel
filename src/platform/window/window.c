@@ -4,7 +4,7 @@
 #include <GLFW/glfw3.h>
 #include <stb_image.h>
 
-GLFWwindow *window; // global window
+GLFWwindow *window = NULL; // global window
 
 bool window_create(int width, int height, const char *title)
 {
@@ -25,9 +25,9 @@ bool window_create(int width, int height, const char *title)
     if (window == NULL)
     {
         LOG_ERROR("Window creation failed");
-        glfwTerminate();
-        return false;
+        goto cleanup;
     }
+
     glfwMakeContextCurrent(window);
     LOG_INFO("Successfully created window of resolution %dx%d named '%s'", 
         width, height, title);
@@ -37,6 +37,10 @@ bool window_create(int width, int height, const char *title)
     stbi_set_flip_vertically_on_load(true);
 
     return true;
+
+cleanup:
+    window_destroy();
+    return false;
 }
 
 bool window_should_close(void)
@@ -60,12 +64,11 @@ void window_destroy(void)
 {
     if (window == NULL) return;
 
-    LOG_INFO("Destroying window");
+    LOG_INFO("Destroying window...");
     glfwDestroyWindow(window);
     window = NULL;
-    LOG_INFO("Destroyed window");
 
-    LOG_INFO("Terminating GLFW");
+    LOG_INFO("Terminating GLFW...");
     glfwTerminate();
-    LOG_INFO("Terminated GLFW");
 }
+
