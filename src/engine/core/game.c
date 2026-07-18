@@ -16,6 +16,10 @@
 #define SCR_WIDTH 1280
 #define SCR_HEIGHT 720
 
+static bool engine_core_init(void);
+static bool engine_render_backend_init(void); 
+static bool engine_render_resources_init(void);
+static bool engine_world_init(void);
 static void camera_handle_input(void);
 
 static Camera camera;
@@ -28,32 +32,25 @@ static Chunk chunk;
 
 bool game_init(void)
 {
-    LOG_INFO("Initializing game...");
-
-    if (!window_create(SCR_WIDTH, SCR_HEIGHT, "BuoyyVoxel"))
-        goto fail;
-
-    if (!gl_context_init())
-        goto fail;
-
-    input_init();
-
-    camera_init(&camera, SCR_WIDTH, SCR_HEIGHT);
-
-    if (!shader_create_from_file(&shader, 
-        "res/shaders/textured_cube.vert", "res/shaders/textured_cube.frag"))
+    if (!engine_core_init())
     {
-        LOG_ERROR("Couldn't create shader 'simple'");
         goto fail;
     }
-    shader_bind(&shader);
-    shader_set_mat4(&shader, "projection", camera.projection);
 
-    texture_atlas_create(&terrain_atlas, "res/images/atlas.png", 2, 2);
-    texture_atlas_set_sampler(&terrain_atlas, &shader, "tex");
+    if (!engine_render_backend_init())
+    {
+        goto fail;
+    }
 
-    chunk_create(&chunk);
-    chunk_build_mesh(&chunk, &terrain_atlas);
+    if (!engine_render_resources_init())
+    {
+        goto fail;
+    }
+
+    if (!engine_world_init())
+    {
+        goto fail;
+    }
 
     return true;
 
@@ -97,6 +94,55 @@ void game_shutdown(void)
     texture_atlas_destroy(&terrain_atlas);
     chunk_destroy(&chunk);
     window_destroy();
+}
+
+static bool engine_core_init(void)
+{
+    LOG_INFO("Initializing game...");
+
+    if (!window_create(SCR_WIDTH, SCR_HEIGHT, "BuoyyVoxel"))
+        return false;
+
+    if (!gl_context_init())
+        return false;
+
+    input_init();
+
+    return true;
+}
+
+static bool engine_render_backend_init(void)
+{
+    if (!shader_create_from_file(&shader, 
+        "res/shaders/textured_cube.vert", "res/shaders/textured_cube.frag"))
+    {
+        LOG_ERROR("Couldn't create shader 'simple'");
+        return false;
+    }
+    shader_bind(&shader);
+
+    return true;
+}
+
+static bool engine_render_resources_init(void)
+{
+    texture_atlas_create(&terrain_atlas, "res/images/atlas.png", 2, 2);
+    texture_atlas_set_sampler(&terrain_atlas, &shader, "tex");
+
+    return true;
+}
+
+static bool engine_world_init(void)
+{
+    camera_init(&camera, SCR_WIDTH, SCR_HEIGHT);
+    shader_set_mat4(&shader, "projection", camera.projection);
+
+    if (!chunk_create(&chunk))
+        return false;
+
+    chunk_build_mesh(&chunk, &terrain_atlas);
+
+    return true;
 }
 
 static void camera_handle_input(void)

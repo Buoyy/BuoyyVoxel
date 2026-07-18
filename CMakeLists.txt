@@ -63,7 +63,6 @@ set(RENDER_RESOURCES_SOURCES
 set(WORLD_SOURCES
     src/engine/world/camera.c
     src/engine/world/chunk.c
-    src/engine/world/transform.c
     src/engine/world/block_registry.c
 )
 
@@ -89,7 +88,6 @@ endif()
 # set(TEST_SOURCES
 #     src/tests/triangle_test.c
 #     src/tests/quad_test.c
-#     src/tests/cube_test.c
 # )
 
 # ---------------------------------------------------------------------------

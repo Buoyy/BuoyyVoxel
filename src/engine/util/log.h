@@ -12,7 +12,7 @@ typedef enum LogLevel
     LOG_LEVEL_ERROR,
 } LogLevel;
 
-void log_impl(LogLevel log_level, const char *message, ...) __attribute__((format(printf, 2, 3)));
+void log_impl(LogLevel log_level, const char *message, ...);
 
 #endif // BV_ENGINE_UTIL_LOG_H
 

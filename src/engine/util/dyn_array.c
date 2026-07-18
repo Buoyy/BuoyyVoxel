@@ -13,7 +13,7 @@ static bool da_grow(DynArray *da)
     void *new_data = realloc(da->data, 2 * da->capacity * da->element_size);
     if (new_data == NULL)
     {
-        LOG_ERROR("Couldn't grow DynArray of element size %zu", da->element_size);
+        LOG_ERROR("Couldn't reallocate memory for DynArray");
         return false;
     }
 
@@ -32,7 +32,7 @@ bool da_init(DynArray *da, const size_t element_size)
     da->data = malloc(DA_INIT_CAP * element_size);
     if (da->data == NULL)
     {
-        LOG_ERROR("Couldn't allocate memory for DynArray of element size %zu", element_size);
+        LOG_ERROR("Couldn't reallocate memory for DynArray");
         return false;
     }
 
@@ -102,7 +102,7 @@ void da_remove(DynArray *da, size_t index)
 {
     if (index >= da->length)
     {
-        fprintf(stderr, "Index out of bounds\n");
+        LOG_ERROR("Index out of bounds");
         return;
     }
 
