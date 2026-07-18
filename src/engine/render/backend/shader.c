@@ -40,6 +40,17 @@ static bool link_shader(unsigned int shader, unsigned int vert, unsigned int fra
     return (bool)success;
 }
 
+static int shader_get_uniform(const Shader *shader, const char *identifier)
+{
+    int location = glGetUniformLocation(shader->id, identifier);
+    if (location < 0)
+    {
+        LOG_ERROR("Uniform named '%s' was not found.", identifier);
+    }
+
+    return location;
+}
+
 bool shader_create(Shader *shader, const char *vert_src, const char *frag_src)
 {
     unsigned int vert = glCreateShader(GL_VERTEX_SHADER);
@@ -86,6 +97,7 @@ bool shader_create_from_file(Shader *shader, const char *vert_path, const char *
     if (!file_read_full(frag_path, &frag_src))
     {
         LOG_ERROR("Couldn't read fragment shader file '%s'", frag_path);
+        file_free(vert_src);
         return false;
     }
     LOG_INFO("Read fragment shader file '%s' successfully", frag_path);
@@ -111,44 +123,29 @@ void shader_destroy(Shader *shader)
 
 void shader_set_int(const Shader *shader, const char *identifier, const int value)
 {
-    int location = glGetUniformLocation(shader->id, identifier);
-    if (location < 0)
-    {
-        LOG_ERROR("Uniform named '%s' was not found.", identifier);
-        return;
-    }
+    int location = shader_get_uniform(shader, identifier);
     glUniform1i(location, value);
 }
 
 void shader_set_float(const Shader *shader, const char *identifier, const float value)
 {
-    int location = glGetUniformLocation(shader->id, identifier);
-    if (location < 0)
-    {
-        LOG_ERROR("Uniform named '%s' was not found.", identifier);
-        return;
-    }
+    int location = shader_get_uniform(shader, identifier);
     glUniform1f(location, value);
 }
 
 void shader_set_vec3(const Shader *shader, const char *identifier, const vec3 value)
 {
-    int location = glGetUniformLocation(shader->id, identifier);
-    if (location < 0)
-    {
-        LOG_ERROR("Uniform named '%s' was not found.", identifier);
-        return;
-    }
+    int location = shader_get_uniform(shader, identifier);
     glUniform3fv(location, 1, value);
 }
 
 void shader_set_mat4(const Shader *shader, const char *identifier, const mat4 value)
 {
-    int location = glGetUniformLocation(shader->id, identifier);
-    if (location < 0)
-    {
-        LOG_ERROR("Uniform named '%s' was not found.", identifier);
-        return;
-    }
+    int location = shader_get_uniform(shader, identifier);
     glUniformMatrix4fv(location, 1, GL_FALSE, &value[0][0]);
+}
+
+void shader_set_sampler(const Shader *shader, const char *identifier, const Texture *texture)
+{
+    shader_set_int(shader, identifier, texture->index);
 }

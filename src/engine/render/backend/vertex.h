@@ -3,10 +3,14 @@
 
 #include <cglm/types.h>
 
+/**
+ * Represents a vertex, the foundation of the graphics pipeline.
+ */
 typedef struct Vertex
 {
     vec3 position;
     vec2 uv;
 } Vertex;
 
-#endif
+#endif // BV_ENGINE_RENDER_BACKEND_VERTEX_H
+

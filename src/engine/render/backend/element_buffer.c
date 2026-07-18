@@ -27,3 +27,4 @@ void element_buffer_destroy(ElementBuffer *eb)
 {
     glDeleteBuffers(1, &eb->id);
 }
+

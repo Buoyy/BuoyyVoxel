@@ -26,3 +26,4 @@ void vertex_buffer_destroy(VertexBuffer *vb)
 {
 	glDeleteBuffers(1, &vb->id);
 }
+

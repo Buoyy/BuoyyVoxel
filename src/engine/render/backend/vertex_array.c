@@ -28,3 +28,4 @@ void vertex_array_destroy(VertexArray *va)
 {
 	glDeleteVertexArrays(1, &va->id);
 }
+

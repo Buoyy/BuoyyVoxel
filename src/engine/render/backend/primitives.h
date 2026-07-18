@@ -6,6 +6,9 @@
 #define FACE_VERTICES_COUNT 4
 #define FACE_INDICES_COUNT  6
 
+/**
+ * Represents the different directions a block's face can point in.
+ */
 typedef enum FaceDirection
 {
     FACE_FRONT,
@@ -18,23 +21,34 @@ typedef enum FaceDirection
     FACE_COUNT
 } FaceDirection;
 
+/**
+ * Represents the geometry of a quad representing a face of a block.
+ */
 typedef struct FaceGeometry
 {
     Vertex vertices[FACE_VERTICES_COUNT];
 } FaceGeometry;
 
-// Simple triangle
+/**
+ * Represents a simple triangle without textures.
+ */
 extern const float triangle_vertices[9];
 
-// Simple quad/rectangle
+/**
+ * Represents a quad (square) with texture UVs.
+ */
 extern const Vertex quad_vertices[FACE_VERTICES_COUNT];
+
+/**
+ * Represents the drawing indices of the vertices of `quad_vertices`.
+ */
 extern const unsigned int quad_indices[FACE_INDICES_COUNT];
 
-// Legacy primitives used by old rendering tests.
-// TODO: remove when test suite is migrated
-extern const Vertex cube_vertices[24];
-extern const unsigned int cube_indices[36];
-
+/**
+ * Represents all the Vertices of a block separated as Vertices of its respective faces.
+ * The foundation of all Voxels.
+ */
 extern const FaceGeometry block_faces[FACE_COUNT];
 
-#endif
+#endif // BV_ENGINE_RENDER_BACKEND_PRIMITIVES_H
+

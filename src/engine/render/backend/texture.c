@@ -76,3 +76,4 @@ void texture_create_default(Texture *texture, const char *path, const int format
             GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     texture_load_image(path, format);
 }
+
