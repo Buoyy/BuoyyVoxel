@@ -3,7 +3,6 @@
 
 # Treat .vert and .frag files as GLSL
 *.frag linguist-language=GLSL
-*.vert linguist-language=GLSL
 
 # Third-party code
 ext/** linguist-vendored
