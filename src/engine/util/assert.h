@@ -21,6 +21,7 @@ void assert_impl(const char *expr, const char *file, const int line);
 #define ASSERT(EXPR) 
 #define UNREACHABLE()
 
-#endif 
+#endif // NDEBUG 
 
-#endif
+#endif // BV_ENGINE_UTIL_ASSERT_H
+

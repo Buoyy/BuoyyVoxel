@@ -54,7 +54,7 @@ void da_append(DynArray *da, const void *value)
     da->length++;
 }
 
-void *da_get(DynArray *da, size_t index)
+void *da_get(const DynArray *da, size_t index)
 {
     if (index >= da->length)
     {
@@ -122,3 +122,4 @@ void da_deinit(DynArray *da)
     da->length = 0;
     da->capacity = 0;
 }
+

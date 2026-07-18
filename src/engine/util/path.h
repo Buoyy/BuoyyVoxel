@@ -3,4 +3,5 @@
 
 const char *path_filename(const char *path);
 
-#endif
+#endif // BV_ENGINE_UTIL_PATH_H
+

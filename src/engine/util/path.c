@@ -10,3 +10,4 @@ const char *path_filename(const char *path)
     }
     return filename ? filename + 1 : path;
 }
+

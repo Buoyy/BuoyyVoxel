@@ -9,3 +9,4 @@ void assert_impl(const char *expr, const char *file, const int line)
     LOG_ERROR("Assertion failed: %s (%s:%d)", expr, path_filename(file), line);
     abort();
 }
+

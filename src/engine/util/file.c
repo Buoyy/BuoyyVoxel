@@ -1,6 +1,7 @@
 #include "engine/util/file.h"
 
 #include "engine/util/log.h"
+#include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,8 +12,7 @@ bool file_read_full(const char *path, char **buffer)
     if (file == NULL)
     {
         LOG_ERROR("Couldn't open file '%s'", path);
-        perror("");
-        return false;
+        goto fail_file;
     }
     LOG_INFO("Opened file '%s'", path);
 
@@ -26,8 +26,7 @@ bool file_read_full(const char *path, char **buffer)
     if (file_str == NULL)
     {
         LOG_ERROR("Couldn't allocate memory for reading file '%s' into dynamic buffer", path);
-        fclose(file);
-        return false;
+        goto fail_buf;
     }
     LOG_INFO("Allocated %zu bytes to read file '%s'", file_size+1, path);
 
@@ -35,9 +34,7 @@ bool file_read_full(const char *path, char **buffer)
     if (bytes_read != file_size)
     {
         LOG_ERROR("Couldn't read file: '%s'", path);
-        free(file_str);
-        fclose(file);
-        return false;
+        goto fail_buf;
     }
     LOG_INFO("Read %zu bytes into buffer allocated for '%s'", bytes_read, path);
 
@@ -47,9 +44,22 @@ bool file_read_full(const char *path, char **buffer)
     LOG_INFO("Closed file '%s'", path);
 
     return true;
+
+fail_file:
+    perror("");
+    fclose(file);
+    return false;
+
+fail_buf:
+    perror("");
+    fclose(file);
+    free(file_str);
+    return false;
+
 }
 
 void file_free(char *buffer)
 {
     free(buffer);
 }
+

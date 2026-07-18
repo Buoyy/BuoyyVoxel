@@ -24,3 +24,4 @@ void log_impl(LogLevel log_level, const char *message, ...)
     va_end(params);
     printf("\n");
 }
+
